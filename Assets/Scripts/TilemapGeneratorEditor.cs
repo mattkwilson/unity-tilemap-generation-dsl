@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Tilemaps;
+
 using UnityEditor;
 
 [CustomEditor(typeof(TilemapGenerator))]
@@ -27,22 +27,10 @@ public class TilemapGeneratorEditor : Editor
         serializedObject.FindProperty("DSLInput").stringValue = EditorGUILayout.TextArea(serializedObject.FindProperty("DSLInput").stringValue, GUILayout.ExpandHeight(true)); 
         EditorGUILayout.EndScrollView();
         if(GUILayout.Button("Generate Tilemap")) {
-            GameObject tilemapGameObject = Instantiate(tilemapGenerator.TilemapPrefab);
-            Tilemap tilemap = tilemapGameObject.GetComponentInChildren<Tilemap>();
-            Tile tileBlue = ScriptableObject.CreateInstance("Tile") as Tile;
-            Tile tileRed = ScriptableObject.CreateInstance("Tile") as Tile;
-            Tile tileGreen = ScriptableObject.CreateInstance("Tile") as Tile;
-            tileBlue.sprite = tilemapGenerator.BaseTileSprite;
-            tileRed.sprite = tilemapGenerator.BaseTileSprite;
-            tileGreen.sprite = tilemapGenerator.BaseTileSprite;
-            tileBlue.color = Color.blue;
-            tileRed.color = Color.red;
-            tileGreen.color = Color.green;
-            for(int i = 0; i < 10; i++ ) {
-                tilemap.SetTile(new Vector3Int(i,0,0), tileBlue);
-                tilemap.SetTile(new Vector3Int(i,1,0), tileRed);
-                tilemap.SetTile(new Vector3Int(i,2,0), tileGreen);
-            }
+            tilemapGenerator.Canvas(100, 100);
+            tilemapGenerator.Fill(0, 0, 10, 1, Color.blue);
+            tilemapGenerator.Fill(0, 1, 10, 1, Color.red);
+            tilemapGenerator.Fill(0, 2, 10, 1, Color.green);
         }
         serializedObject.ApplyModifiedProperties();
     }
