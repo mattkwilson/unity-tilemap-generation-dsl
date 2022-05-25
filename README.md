@@ -2,4 +2,4 @@
 Procedural Terrain Generation DSL in Unity
 
 ## Antlr
-Generate C# source files for grammar file using: `antlr4 -Dlanguage=CSharp -visitor TilemapDSLLexer.g4 -o ./gen`
+Generate C# source files for grammar file using: `antlr4 -Dlanguage=CSharp -visitor TilemapDSLLexer.g4 TilemapDSLParser.g4 -o ./gen`
