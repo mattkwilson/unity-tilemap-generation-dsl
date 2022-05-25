@@ -20,7 +20,7 @@ TEXT_HACK: '_' -> mode(TEXT_MODE);
 
 PARAM: (VAR|INTEGER);
 VAR: ('x'|'y');
-COLOR_CHANNEL: [0-9]|[1-9][0-9]|[1][0-9][0-9]|[2]([0-4][0-9]|[5][0-5]);
+COLOR_CHANNEL: [2]([0-4][0-9]|[5][0-5])|[1][0-9][0-9]|[1-9][0-9]|[0-9];
 INTEGER: [1-9][0-9]*;
 WS: [\r\n\t ] -> channel(HIDDEN);
 
