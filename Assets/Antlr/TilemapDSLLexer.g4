@@ -24,10 +24,10 @@ FUNCTION_START: 'Function:';
 FUNCTION_END: 'EndFunction';
 CALL: 'Call' WS* -> mode(TEXT_MODE);
 
-PARAM: ('x'|'y'|[1-9][0-9]*|'0');
+INTEGER: ([1-9][0-9]*|'0');
 VAR: ('x'|'y');
-COLOR_CHANNEL: [2]([0-4][0-9]|[5][0-5])|[1][0-9][0-9]|[1-9][0-9]|[0-9];
-INTEGER: [1-9][0-9]*;
+PARAM: ('x'|'y'|[1-9][0-9]*|'0');
+
 CONDITION: (('<'|'>')'='?|'=='|'!=');
 
 WS: [\r\n\t ] -> channel(HIDDEN);
