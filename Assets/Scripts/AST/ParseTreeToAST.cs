@@ -1,6 +1,6 @@
 ﻿using Antlr4.Runtime.Misc;
 using Antlr4.Runtime.Tree;
-using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Assets.Scripts.AST
@@ -29,7 +29,12 @@ namespace Assets.Scripts.AST
 
         public override ASTBase VisitFunction([NotNull] TilemapDSLParser.FunctionContext context)
         {
-            return base.VisitFunction(context);
+            string name = context.TEXT().GetText();
+            List<Statement> statements = new List<Statement>(); 
+            foreach (TilemapDSLParser.StatementContext statement in context.statement()) {
+                statements.Add(VisitStatement(statement) as Statement);         
+            }            
+            return new Function(name, statements);
         }
 
         public override ASTBase VisitIf([NotNull] TilemapDSLParser.IfContext context)

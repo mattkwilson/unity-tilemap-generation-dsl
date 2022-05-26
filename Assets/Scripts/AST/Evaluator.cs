@@ -35,7 +35,7 @@ namespace Assets.Scripts.AST
 
         public void visit(TilemapGenerator tilemapGenerator, Function f)
         {
-            throw new System.NotImplementedException();
+            
         }
 
         public void visit(TilemapGenerator tilemapGenerator, Loop l)
