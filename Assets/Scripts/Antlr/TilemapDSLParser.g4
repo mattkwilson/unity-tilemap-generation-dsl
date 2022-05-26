@@ -2,7 +2,8 @@ parser grammar TilemapDSLParser;
 options { tokenVocab=TilemapDSLLexer; }
 
 program : canvas (statement | function)*;
-statement : (loop|if|color|noiseMap|noise|fill|call);
+statement : (loop|if|fill|call|variable);
+variable : (color|noiseMap|noise);
 // 'Canvas' width height
 canvas : CANVAS_START INTEGER INTEGER;
 // 'Loop' (x 0 to 100 step 1)
@@ -26,3 +27,5 @@ call : CALL TEXT INTEGER INTEGER;
 // 'If' (Number Condition Number)
 // 'EndIf'
 if : IF_START STATEMENT_DEF_START INTEGER CONDITION INTEGER STATEMENT_DEF_END statement* IF_END;
+
+

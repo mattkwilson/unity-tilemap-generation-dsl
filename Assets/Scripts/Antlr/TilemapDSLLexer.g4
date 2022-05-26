@@ -14,13 +14,13 @@ IF_START: 'If';
 IF_END: 'EndIf';
 
 FILL_START: 'Fill';
-COLOR_START: 'Color:';
+COLOR_START: 'Color:' WS* -> mode(TEXT_MODE);
 COLOR_IN: 'in' WS* -> mode(TEXT_MODE);
-NOISEMAP_START: 'NoiseMap:';
-NOISE_START: 'Noise:';
+NOISEMAP_START: 'NoiseMap:' WS* -> mode(TEXT_MODE);
+NOISE_START: 'Noise:' WS* -> mode(TEXT_MODE);
 NOISE_FROM: 'from' WS* -> mode(TEXT_MODE);
 
-FUNCTION_START: 'Function:';
+FUNCTION_START: 'Function:' WS* -> mode(TEXT_MODE);
 FUNCTION_END: 'EndFunction';
 CALL: 'Call' WS* -> mode(TEXT_MODE);
 
