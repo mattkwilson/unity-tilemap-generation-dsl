@@ -7,10 +7,7 @@ LOOP_END: 'EndLoop';
 LOOP_DEF_TO: 'to';
 LOOP_DEF_STEP: 'step';
 
-STATEMENT_DEF_START: '(';
-STATEMENT_DEF_END: ')';
-
-IF_START: 'If';
+IF_START: 'If' WS* -> mode(TEXT_MODE);
 IF_END: 'EndIf';
 
 FILL_START: 'Fill';
@@ -26,7 +23,6 @@ CALL: 'Call' WS* -> mode(TEXT_MODE);
 
 INTEGER: ([1-9][0-9]*|'0');
 VAR: ('x'|'y');
-PARAM: ('x'|'y'|[1-9][0-9]*|'0');
 
 CONDITION: (('<'|'>')'='?|'=='|'!=');
 
