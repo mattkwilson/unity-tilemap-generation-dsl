@@ -5,6 +5,6 @@ namespace Assets.Scripts.AST
 {
     public abstract class ASTBase
     {
-        public abstract void accept(TilemapGenerator tilemapGenerator, ITilemapDSLVisitor v);
+        public abstract void Accept(TilemapGenerator tilemapGenerator, ITilemapDSLVisitor v);
     }
 }

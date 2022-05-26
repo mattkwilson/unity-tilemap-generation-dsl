@@ -5,9 +5,8 @@ namespace Assets.Scripts.AST
 {
     public class Canvas : ASTBase
     {
-        public override void accept(TilemapDSLVisitor v)
-        {
-            throw new System.NotImplementedException();
+        public override void Accept(TilemapGenerator tilemapGenerator, ITilemapDSLVisitor v){
+
         }
     }
 }

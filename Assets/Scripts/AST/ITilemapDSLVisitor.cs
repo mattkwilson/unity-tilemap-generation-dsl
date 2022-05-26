@@ -14,6 +14,6 @@ namespace Assets.Scripts.AST
         void visit(TilemapGenerator tilemapGenerator, Loop l);
         void visit(TilemapGenerator tilemapGenerator, Noise n);
         void visit(TilemapGenerator tilemapGenerator, NoiseMap n);
-        
+        void visit(TilemapGenerator tilemapGenerator, Statement n);
     }
 }

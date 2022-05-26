@@ -5,7 +5,7 @@ namespace Assets.Scripts.AST
 {
     public class Color : Variable
     {
-        public override void accept(TilemapGenerator tilemapGenerator, ITilemapDSLVisitor<TilemapGenerator> v) {
+        public override void Accept(TilemapGenerator tilemapGenerator, ITilemapDSLVisitor v){
 
         }
     }

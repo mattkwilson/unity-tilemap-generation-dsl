@@ -2,7 +2,7 @@ namespace Assets.Scripts.AST
 {
     public class If : Statement
     {
-        public override void (TilemapGenerator tilemapGenerator, ITilemapDSLVisitor<TilemapGenerator> v) {
+        public override void Accept(TilemapGenerator tilemapGenerator, ITilemapDSLVisitor v){
 
         }
     }
