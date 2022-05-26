@@ -14,7 +14,7 @@ public class TilemapGeneratorEditor : Editor
     }
 
     void OnDisable() {
-
+        
     }
 
     public override void OnInspectorGUI()
