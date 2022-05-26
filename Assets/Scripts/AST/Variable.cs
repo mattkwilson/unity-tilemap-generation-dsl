@@ -11,6 +11,6 @@ namespace Assets.Scripts.AST
 
     public abstract class Variable : ASTBase
     {
-        public abstract VariableType getType();
+
     }
 }

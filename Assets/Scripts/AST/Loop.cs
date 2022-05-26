@@ -5,7 +5,7 @@ namespace Assets.Scripts.AST
 {
     public class Loop : Statement
     {
-        public override void accept(TilemapGenerator tilemapGenerator, ITilemapDSLVisitor<TilemapGenerator> v) {
+        public override void accept(TilemapGenerator tilemapGenerator, ITilemapDSLVisitor v){
 
         }
     }

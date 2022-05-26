@@ -5,7 +5,7 @@ namespace Assets.Scripts.AST
 {
     public class Function : Statement
     {
-        public override void (TilemapGenerator tilemapGenerator, ITilemapDSLVisitor<TilemapGenerator> v) {
+        public override void accept(TilemapGenerator tilemapGenerator, ITilemapDSLVisitor v){
 
         }
     }

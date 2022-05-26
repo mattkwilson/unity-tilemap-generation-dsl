@@ -20,9 +20,8 @@ namespace Assets.Scripts.AST
             // TODO: implement constructor
         }
 
-        public void accept(ITilemapDSLVisitor<TilemapGenerator> v)
-        {
-            v.visit(this);
+        public override void accept(TilemapGenerator tilemapGenerator, ITilemapDSLVisitor v){
+
         }
     }
 }
