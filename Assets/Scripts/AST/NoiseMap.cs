@@ -5,7 +5,7 @@ namespace Assets.Scripts.AST
 {
     public class NoiseMap : Variable
     {
-        public override void accept(TilemapGenerator tilemapGenerator, ITilemapDSLVisitor v){
+        public override void Accept(TilemapGenerator tilemapGenerator, ITilemapDSLVisitor v){
 
         }
     }

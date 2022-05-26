@@ -9,7 +9,7 @@ namespace Assets.Scripts.AST
         NoiseMap
     }
 
-    public abstract class Variable : ASTBase
+    public abstract class Variable : Statement
     {
 
     }

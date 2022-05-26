@@ -7,6 +7,7 @@ namespace Assets.Scripts.AST
     public class Evaluator : ITilemapDSLVisitor
     {
         private Dictionary<string, Variable> variables = new Dictionary<string, Variable>();
+        private Dictionary<string, Function> functions = new Dictionary<string, Function>();
 
         public void visit(TilemapGenerator tilemapGenerator, Program p)
         {
@@ -14,6 +15,12 @@ namespace Assets.Scripts.AST
         }
 
         public void visit(TilemapGenerator tilemapGenerator, Call c)
+        {
+            // Get function from dictionary using it's name
+            // Call function Execute method
+        }
+
+        public void visit(TilemapGenerator tilemapGenerator, Statement c)
         {
             throw new System.NotImplementedException();
         }
@@ -35,7 +42,8 @@ namespace Assets.Scripts.AST
 
         public void visit(TilemapGenerator tilemapGenerator, Function f)
         {
-            
+            functions.Add(f.GetName(), f);
+            f.SetScope(functions.Count); // this works as long as we never remove any functions from the dictionary
         }
 
         public void visit(TilemapGenerator tilemapGenerator, Loop l)
