@@ -294,14 +294,14 @@ The user studies were done separately to prevent one learning from the other. We
 
 
 Example of using noise
-
+```
 Canvas 100 100
 Color Red 255 0 0
 NoiseMap NoiseMap1 10 20
 Noise Noise1 10 15 NoiseMap1
 If Noise1 < 5
 	Fill 10 10 2 2 Red
-
+```
 
 #### Tasks
 
@@ -334,7 +334,7 @@ Our users found our DSL design to be approachable and only had issues with inden
 
 #### Conclusions
 
-We decided to addq colons to declare variables and functions. We also added 3 keywords EndLoop, EndFunction, and EndIf. 
+We decided to add colons to declare variables and functions. We also added 3 keywords EndLoop, EndFunction, and EndIf. 
 
 
 ## Language Design
