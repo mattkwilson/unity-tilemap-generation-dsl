@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Assets.Scripts.AST
@@ -18,6 +19,11 @@ namespace Assets.Scripts.AST
         {
             // Get function from dictionary using it's name
             // Call function Execute method
+            if (!functions.ContainsKey(c.getFunctionName())) {
+                throw new Exception("Function does not exist");
+            }
+            Function function = functions[c.getFunctionName()];
+            function.Execute(tilemapGenerator, this, c.getX(), c.getY());;
         }
 
         public void visit(TilemapGenerator tilemapGenerator, Statement c)
@@ -37,7 +43,8 @@ namespace Assets.Scripts.AST
 
         public void visit(TilemapGenerator tilemapGenerator, Fill f)
         {
-            throw new System.NotImplementedException();
+            Color32 color = new Color32(255, f.getColor().getB(), f.getColor().getG(), f.getColor.getR());
+            tilemapGenerator.Fill(f.getX(), f.getY(), f.getWidth(), f.getHeight(), color);
         }
 
         public void visit(TilemapGenerator tilemapGenerator, Function f)

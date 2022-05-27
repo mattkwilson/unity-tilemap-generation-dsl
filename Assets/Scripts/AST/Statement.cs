@@ -10,5 +10,13 @@ namespace Assets.Scripts.AST
         public void SetPositionOffset(int x, int y) {
             positionOffset = new Vector2Int(x, y);
         }
+
+        public int getX() {
+            return positionOffset.x;
+        }
+
+        public int getY() {
+            return positionOffset.y;
+        }
     }
 }
