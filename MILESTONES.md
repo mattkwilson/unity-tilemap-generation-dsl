@@ -416,6 +416,8 @@ Call CreateTerrain 0 0
 ```
 Output: Using noise to generate blue terrain
 
+![image](https://media.github.students.cs.ubc.ca/user/8815/files/bbe181cb-f18d-4463-aa61-488c4d0373d8)
+
 
 ### Current Limitations
 - Functions have no ability to define parameters (only the predefined and required  X and Y)
