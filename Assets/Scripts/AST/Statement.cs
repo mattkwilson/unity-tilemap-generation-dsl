@@ -19,6 +19,7 @@ namespace Assets.Scripts.AST
 
         public int getY() {
             return positionOffset.y;
+		}
 
         public void SetLoopX(int x) 
         {

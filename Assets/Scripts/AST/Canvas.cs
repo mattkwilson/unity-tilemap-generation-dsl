@@ -18,7 +18,7 @@ namespace Assets.Scripts.AST
 		}
 		
         public override void Accept(TilemapGenerator tilemapGenerator, ITilemapDSLVisitor v) {
-			v.visit(this, tilemapGenerator)
+			v.visit(this, tilemapGenerator);
         }
     }
 }
