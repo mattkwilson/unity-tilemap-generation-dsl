@@ -48,7 +48,23 @@ namespace Assets.Scripts.AST
 
         public void visit(TilemapGenerator tilemapGenerator, Loop l)
         {
-            throw new System.NotImplementedException();
+            // Problem: this simple implementation allows two or more loops of either X or Y to be nested
+            // which does not make sense. We need to restrict nesting to two loops only one over x and the other over y.
+            for (int i = l.GetFrom(); i <= l.GetTo(); i += l.GetStep())
+            {
+                foreach (Statement statement in l.GetStatements())
+                {
+                    if (l.GetIterator() == Iterator.X)
+                    {
+                        statement.SetLoopX(i);
+                    }
+                    else
+                    {
+                        statement.SetLoopY(i);
+                    }
+                    statement.Accept(tilemapGenerator, this);
+                }
+            }
         }
 
         public void visit(TilemapGenerator tilemapGenerator, Noise n)
