@@ -5,21 +5,35 @@ namespace Assets.Scripts.AST
 {
     public class Program : ASTBase
     {
-        private Canvas canvas;
-        private Dictionary<string, Variable> variables;
-        private List<Statement> statements;
-        private List<Function> functions;
-    
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="variables"></param>
-        /// <param name="functions"></param>
+        private Canvas _canvas;
+        private Dictionary<string, Variable> _variables;
+        private List<Statement> _statements;
+        private List<Function> _functions;
+
         public Program(Canvas canvas, Dictionary<string, Variable> variables, List<Statement> statements, List<Function> functions)
         {
-            // TODO: implement constructor
+            _canvas = canvas;
+            _variables = variables;
+            _statements = statements;
+            _functions = functions;
         }
 
+		    public List<Statement> getStatements()
+        {
+            return _statements;
+        }
+
+        public List<Function> getFunctions()
+        {
+            return _functions;
+        }
+
+        public Canvas getCanvas()
+        {
+            return _canvas;
+        }
+    
+    
         public override void Accept(TilemapGenerator tilemapGenerator, ITilemapDSLVisitor v){
             v.visit(tilemapGenerator, this);
         }

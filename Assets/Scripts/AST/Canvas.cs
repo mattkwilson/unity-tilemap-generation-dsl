@@ -3,22 +3,22 @@ using UnityEngine;
 
 namespace Assets.Scripts.AST
 {
-    public class Canvas : ASTBase
-    {
-		private int width;
+    public class Canvas : ASTBase {
 
-		private int height;
+        private int width;
 
-		public int getWidth() {
-			return width;
-		}
+        private int height;
 
-		public int getHeight() {
-			return height;
-		}
-		
-        public override void Accept(TilemapGenerator tilemapGenerator, ITilemapDSLVisitor v) {
-			v.visit(tilemapGenerator, this);
+        public int getWidth() {
+          return width;
         }
+
+        public int getHeight() {
+          return height;
+        }
+
+        public override void Accept(TilemapGenerator tilemapGenerator, ITilemapDSLVisitor v) {
+          v.visit(tilemapGenerator, this);
+        } 
     }
 }

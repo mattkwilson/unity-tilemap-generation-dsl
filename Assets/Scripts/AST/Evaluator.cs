@@ -12,7 +12,17 @@ namespace Assets.Scripts.AST
 
         public void visit(TilemapGenerator tilemapGenerator, Program p)
         {
-            throw new System.NotImplementedException();
+            Canvas canvas = p.getCanvas();
+            canvas.Accept(tilemapGenerator, this);
+            foreach (Function function in p.getFunctions())
+            {
+                function.Accept(tilemapGenerator, this);
+            }
+
+            foreach (Statement statement in p.getStatements())
+            {
+                statement.Accept(tilemapGenerator, this);
+            }
         }
 
         public void visit(TilemapGenerator tilemapGenerator, Call c)
@@ -41,12 +51,12 @@ namespace Assets.Scripts.AST
 
         public void visit(TilemapGenerator tilemapGenerator, Canvas c)
         {
-            throw new System.NotImplementedException();
+            tilemapGenerator.Canvas(c.getWidth(), c.getHeight());
         }
 
         public void visit(TilemapGenerator tilemapGenerator, Color c)
         {
-            throw new System.NotImplementedException();
+            variables.Add(c.GetName(), c);
         }
 
         public void visit(TilemapGenerator tilemapGenerator, Fill f)
@@ -76,8 +86,8 @@ namespace Assets.Scripts.AST
 
         public void visit(TilemapGenerator tilemapGenerator, Loop l)
         {
-            // Problem: this simple implementation allows two or more loops of either X or Y to be nested
-            // which does not make sense. We need to restrict nesting to two loops only one over x and the other over y.
+            //This mutex restrict nesting to two loops only one over x and the other over y
+            Loop.LockIterator(l.GetIterator());
             for (int i = l.GetFrom(); i <= l.GetTo(); i += l.GetStep())
             {
                 foreach (Statement statement in l.GetStatements())
@@ -93,6 +103,7 @@ namespace Assets.Scripts.AST
                     statement.Accept(tilemapGenerator, this);
                 }
             }
+            Loop.FreeIterator(l.GetIterator());
         }
 
         public void visit(TilemapGenerator tilemapGenerator, If i)
@@ -117,12 +128,16 @@ namespace Assets.Scripts.AST
 
         public void visit(TilemapGenerator tilemapGenerator, Noise n)
         {
-            throw new System.NotImplementedException();
+            if (variables[n.GetNoiseMapName()] is NoiseMap)
+            {
+                n.PutNoiseMapInfo(variables[n.GetNoiseMapName()] as NoiseMap);
+            }
+            variables.Add(n.GetName(), n);
         }
 
         public void visit(TilemapGenerator tilemapGenerator, NoiseMap n)
         {
-            throw new System.NotImplementedException();
+            variables.Add(n.GetName(), n);
         }
     }
 }

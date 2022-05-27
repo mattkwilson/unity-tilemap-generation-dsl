@@ -40,8 +40,13 @@ namespace Assets.Scripts.AST
 
         public override ASTBase VisitColor([NotNull] TilemapDSLParser.ColorContext context)
         {
-            return base.VisitColor(context);
+            string name = context.TEXT().GetText();
+            int r = Int32.Parse(context.INTEGER()[0].GetText());
+            int g = Int32.Parse(context.INTEGER()[1].GetText());
+            int b = Int32.Parse(context.INTEGER()[2].GetText());
+            return new Color(name, r, g, b);
         }
+
 
         public override ASTBase VisitFill([NotNull] TilemapDSLParser.FillContext context)
         {
@@ -125,7 +130,10 @@ namespace Assets.Scripts.AST
 
         public override ASTBase VisitNoiseMap([NotNull] TilemapDSLParser.NoiseMapContext context)
         {
-            return base.VisitNoiseMap(context);
+            string name = context.TEXT().GetText();
+            int frequency = Int32.Parse(context.INTEGER()[0].GetText());
+            int scale = Int32.Parse(context.INTEGER()[1].GetText());
+            return new NoiseMap(name, frequency, scale);
         }
 
         public override ASTBase VisitProgram([NotNull] TilemapDSLParser.ProgramContext context)

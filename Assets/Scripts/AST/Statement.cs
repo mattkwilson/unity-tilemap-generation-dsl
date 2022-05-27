@@ -16,6 +16,7 @@ namespace Assets.Scripts.AST
         public Vector2Int GetPositionOffset() {
             return positionOffset;
         }
+
         public void SetLoopX(int x) 
         {
             loopX = x;
