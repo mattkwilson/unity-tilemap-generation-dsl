@@ -40,7 +40,14 @@ namespace Assets.Scripts.AST
 
         public override ASTBase VisitIf([NotNull] TilemapDSLParser.IfContext context)
         {
-            return base.VisitIf(context);
+            string noise = context.TEXT().GetText();
+            string condition = context.CONDITION().GetText();
+            int number = Int32.Parse(context.INTEGER().GetText());
+            List<Statement> statements = new List<Statement>();
+            foreach (TilemapDSLParser.StatementContext statement in context.statement()) {
+                statements.Add(VisitStatement(statement) as Statement);         
+            }
+            return new If(noise, condition, number, statements);
         }
 
         public override ASTBase VisitLoop([NotNull] TilemapDSLParser.LoopContext context)

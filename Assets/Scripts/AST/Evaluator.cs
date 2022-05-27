@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Assets.Scripts.AST
@@ -62,6 +63,26 @@ namespace Assets.Scripts.AST
                     {
                         statement.SetLoopY(i);
                     }
+                    statement.Accept(tilemapGenerator, this);
+                }
+            }
+        }
+
+        public void visit(TilemapGenerator tilemapGenerator, If i)
+        {
+            Variable variable = variables[i.GetNoiseVariable()];
+            if (!(variable is Noise))
+            {
+                throw new Exception("If variable should be of Noise type");
+            }
+
+            Noise noise = variable as Noise;
+            // Implement GetInt in Noise
+            // i.SetNoiseValue(noise.GetInt());
+            if (i.EvaluateCondition())
+            {
+                foreach (Statement statement in i.GetStatements())
+                {
                     statement.Accept(tilemapGenerator, this);
                 }
             }
