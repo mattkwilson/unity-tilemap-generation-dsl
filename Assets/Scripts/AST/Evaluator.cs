@@ -109,6 +109,10 @@ namespace Assets.Scripts.AST
 
         public void visit(TilemapGenerator tilemapGenerator, Noise n)
         {
+            if (variables[n.GetNoiseMapName()] is NoiseMap)
+            {
+                n.PutNoiseMapInfo(variables[n.GetNoiseMapName()] as NoiseMap);
+            }
             variables.Add(n.GetName(), n);
         }
 
