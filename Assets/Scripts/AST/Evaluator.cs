@@ -43,7 +43,7 @@ namespace Assets.Scripts.AST
 
         public void visit(TilemapGenerator tilemapGenerator, Canvas c)
         {
-            throw new System.NotImplementedException();
+            tilemapGenerator.Canvas(c.getWidth(), c.getHeight());
         }
 
         public void visit(TilemapGenerator tilemapGenerator, Color c)
