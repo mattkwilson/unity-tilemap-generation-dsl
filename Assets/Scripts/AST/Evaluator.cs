@@ -48,7 +48,7 @@ namespace Assets.Scripts.AST
 
         public void visit(TilemapGenerator tilemapGenerator, Color c)
         {
-            throw new System.NotImplementedException();
+            variables.Add(c.GetName(), c);
         }
 
         public void visit(TilemapGenerator tilemapGenerator, Fill f)
@@ -106,12 +106,12 @@ namespace Assets.Scripts.AST
 
         public void visit(TilemapGenerator tilemapGenerator, Noise n)
         {
-            throw new System.NotImplementedException();
+            variables.Add(n.GetName(), n);
         }
 
         public void visit(TilemapGenerator tilemapGenerator, NoiseMap n)
         {
-            throw new System.NotImplementedException();
+            variables.Add(n.GetName(), n);
         }
     }
 }
