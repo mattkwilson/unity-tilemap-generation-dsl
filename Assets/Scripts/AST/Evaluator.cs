@@ -68,8 +68,8 @@ namespace Assets.Scripts.AST
 
         public void visit(TilemapGenerator tilemapGenerator, Loop l)
         {
-            // Problem: this simple implementation allows two or more loops of either X or Y to be nested
-            // which does not make sense. We need to restrict nesting to two loops only one over x and the other over y.
+            //This mutex restrict nesting to two loops only one over x and the other over y
+            Loop.LockIterator(l.GetIterator());
             for (int i = l.GetFrom(); i <= l.GetTo(); i += l.GetStep())
             {
                 foreach (Statement statement in l.GetStatements())
@@ -85,6 +85,7 @@ namespace Assets.Scripts.AST
                     statement.Accept(tilemapGenerator, this);
                 }
             }
+            Loop.FreeIterator(l.GetIterator());
         }
 
         public void visit(TilemapGenerator tilemapGenerator, If i)
