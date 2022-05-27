@@ -35,7 +35,9 @@ namespace Assets.Scripts.AST
 
         public override ASTBase VisitCanvas([NotNull] TilemapDSLParser.CanvasContext context)
         {
-            return base.VisitCanvas(context);
+            int w = Int32.Parse(context.INTEGER()[0].GetText());
+			int h = Int32.Parse(context.INTEGER()[1].GetText());
+			return new Canvas(w, h);
         }
 
         public override ASTBase VisitColor([NotNull] TilemapDSLParser.ColorContext context)
@@ -138,12 +140,35 @@ namespace Assets.Scripts.AST
 
         public override ASTBase VisitProgram([NotNull] TilemapDSLParser.ProgramContext context)
         {
-            return base.VisitProgram(context);
+            List<Function> functions = new List<Function>();
+			List<Statement> statements = new List<Statement>();
+			Dictionary<string, Variable> variables = new Dictionary<string, Variable>();
+			Canvas canvas;
+			foreach (TilemapDSLParser.StatementContext statementContext in context.statement())
+            {
+                statements.Add(VisitStatement(statementContext) as Statement);
+            }
+			foreach (TilemapDSLParser.FunctionContext functionContext in context.function())
+            {
+                functions.Add(VisitFunction(functionContext) as Function);
+            }
+			canvas = VisitCanvas(context.canvas()) as Canvas;
+			return new Program(canvas, variables, statements, functions);
         }
 
         public override ASTBase VisitStatement([NotNull] TilemapDSLParser.StatementContext context)
         {
-            return base.VisitStatement(context);
+            if (context.loop() != null) {
+				return VisitLoop(context.loop());
+			} else if (context.@if() != null) {
+				return VisitIf(context.@if());
+			} else if (context.fill()!= null) {
+				return VisitFill(context.fill());
+			} else if (context.call()!= null) {
+				return VisitCall(context.call());
+			} else {
+				return VisitVariable(context.variable());
+			}
         }
 
     }
