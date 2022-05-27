@@ -29,11 +29,19 @@ namespace Assets.Scripts.AST
         {
             // Get function from dictionary using it's name
             // Call function Execute method
-            if (!functions.ContainsKey(c.getFunctionName())) {
+            if (!functions.ContainsKey(c.GetFunctionName())) {
                 throw new Exception("Function does not exist");
             }
-            Function function = functions[c.getFunctionName()];
-            function.Execute(tilemapGenerator, this, c.getX(), c.getY());;
+            Function function = functions[c.GetFunctionName()];
+            if (c.GetX() == -1 && c.GetY() == -1) {
+                function.Execute(tilemapGenerator, this, c.GetLoopX(), c.GetLoopY());  
+            } else if (c.GetX() == -1) {
+                function.Execute(tilemapGenerator, this, c.GetLoopX(), c.GetY());  
+            } else if (c.GetY() == -1) {
+                function.Execute(tilemapGenerator, this, c.GetX(), c.GetLoopY());  
+            } else {
+                function.Execute(tilemapGenerator, this, c.GetX(), c.GetY());
+            }
         }
 
         public void visit(TilemapGenerator tilemapGenerator, Statement c)
@@ -53,11 +61,21 @@ namespace Assets.Scripts.AST
 
         public void visit(TilemapGenerator tilemapGenerator, Fill f)
         {
-            Byte b = Convert.ToByte(f.getColor().GetB());
-            Byte g = Convert.ToByte(f.getColor().GetG());
-            Byte r = Convert.ToByte(f.getColor().GetR());
-            Color32 color = new Color32(255, b, g, r);
-            tilemapGenerator.Fill(f.getX(), f.getY(), f.getWidth(), f.getHeight(), color);
+            Color color = (Color)variables[f.GetColor()];
+            Byte b = Convert.ToByte(color.GetB());
+            Byte g = Convert.ToByte(color.GetG());
+            Byte r = Convert.ToByte(color.GetR());
+            Color32 color32 = new Color32(255, b, g, r);
+            
+            if (f.GetX() == -1 && f.GetY() == -1) {
+                tilemapGenerator.Fill(f.GetLoopX()+f.GetPositionOffset().x, f.GetLoopY()+f.GetPositionOffset().y, f.GetWidth(), f.GetHeight(), color32);  
+            } else if (f.GetX() == -1) {
+                tilemapGenerator.Fill(f.GetLoopX()+f.GetPositionOffset().x, f.GetY()+f.GetPositionOffset().y, f.GetWidth(), f.GetHeight(), color32); 
+            } else if (f.GetY() == -1) {
+                tilemapGenerator.Fill(f.GetX()+f.GetPositionOffset().x, f.GetLoopY()+f.GetPositionOffset().y, f.GetWidth(), f.GetHeight(), color32); 
+            } else {
+                tilemapGenerator.Fill(f.GetX()+f.GetPositionOffset().x, f.GetY()+f.GetPositionOffset().y, f.GetWidth(), f.GetHeight(), color32);
+            }
         }
 
         public void visit(TilemapGenerator tilemapGenerator, Function f)

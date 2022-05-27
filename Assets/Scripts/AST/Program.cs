@@ -13,12 +13,12 @@ namespace Assets.Scripts.AST
         public Program(Canvas canvas, Dictionary<string, Variable> variables, List<Statement> statements, List<Function> functions)
         {
             _canvas = canvas;
-			_variables = variables;
-			_statements = statements;
-			_functions = functions;
+            _variables = variables;
+            _statements = statements;
+            _functions = functions;
         }
 
-		public List<Statement> getStatements()
+		    public List<Statement> getStatements()
         {
             return _statements;
         }
@@ -33,7 +33,7 @@ namespace Assets.Scripts.AST
             return _canvas;
         }
     
-
+    
         public override void Accept(TilemapGenerator tilemapGenerator, ITilemapDSLVisitor v){
             v.visit(tilemapGenerator, this);
         }

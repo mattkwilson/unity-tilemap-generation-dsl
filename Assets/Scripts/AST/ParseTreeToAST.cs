@@ -10,7 +10,27 @@ namespace Assets.Scripts.AST
     {
         public override ASTBase VisitCall([NotNull] TilemapDSLParser.CallContext context)
         {
-            return base.VisitCall(context);
+            int x;
+            int y;
+            string functionName = context.TEXT().GetText();
+            if (context.VAR() != null) {
+                if (context.VAR().Length == 1) {
+                    if (context.VAR()[0].GetText() == "x") {
+                        x = -1;
+                        y = Int32.Parse(context.INTEGER()[0].GetText());
+                    } else {
+                        x = Int32.Parse(context.INTEGER()[0].GetText());
+                        y = -1;
+                    }
+                } else {
+                    x = -1;
+                    y = -1;
+                }
+            } else {
+                x = Int32.Parse(context.INTEGER()[0].GetText());
+                y = Int32.Parse(context.INTEGER()[1].GetText());
+            }
+            return new Call(functionName, x, y);
         }
 
         public override ASTBase VisitCanvas([NotNull] TilemapDSLParser.CanvasContext context)
@@ -30,7 +50,37 @@ namespace Assets.Scripts.AST
 
         public override ASTBase VisitFill([NotNull] TilemapDSLParser.FillContext context)
         {
-            return base.VisitFill(context);
+            int x;
+            int y;
+            int width;
+            int height;
+            if (context.VAR() != null) {
+                if (context.VAR().Length == 1) {
+                    if (context.VAR()[0].GetText() == "x") {
+                        x = -1;
+                        y = Int32.Parse(context.INTEGER()[0].GetText());
+                        width = Int32.Parse(context.INTEGER()[1].GetText());
+                        height = Int32.Parse(context.INTEGER()[2].GetText());
+                    } else {
+                        x = Int32.Parse(context.INTEGER()[0].GetText());
+                        y = -1;
+                        width = Int32.Parse(context.INTEGER()[1].GetText());
+                        height = Int32.Parse(context.INTEGER()[2].GetText());
+                    }
+                } else {
+                    x = -1;
+                    y = -1;
+                    width = Int32.Parse(context.INTEGER()[0].GetText());
+                    height = Int32.Parse(context.INTEGER()[1].GetText());
+                }
+            } else {
+                x = Int32.Parse(context.INTEGER()[0].GetText());
+                y = Int32.Parse(context.INTEGER()[1].GetText());
+                width = Int32.Parse(context.INTEGER()[2].GetText());
+                height = Int32.Parse(context.INTEGER()[3].GetText());
+            }
+            string color = context.TEXT().GetText();
+            return new Fill(x, y, width, height, color);
         }
 
         public override ASTBase VisitFunction([NotNull] TilemapDSLParser.FunctionContext context)

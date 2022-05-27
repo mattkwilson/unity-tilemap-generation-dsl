@@ -5,21 +5,20 @@ namespace Assets.Scripts.AST
 {
     public class Canvas : ASTBase {
 
-		private int width;
+        private int width;
 
-		private int height;
+        private int height;
 
-		public int getWidth() {
-			return width;
-		}
-
-		public int getHeight() {
-			return height;
-		}
-		
-        public override void Accept(TilemapGenerator tilemapGenerator, ITilemapDSLVisitor v)
-        {
-	        v.visit(tilemapGenerator, this);
+        public int getWidth() {
+          return width;
         }
+
+        public int getHeight() {
+          return height;
+        }
+
+        public override void Accept(TilemapGenerator tilemapGenerator, ITilemapDSLVisitor v) {
+          v.visit(tilemapGenerator, this);
+        } 
     }
 }
