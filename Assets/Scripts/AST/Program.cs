@@ -9,6 +9,21 @@ namespace Assets.Scripts.AST
         private Dictionary<string, Variable> variables;
         private List<Statement> statements;
         private List<Function> functions;
+
+        public List<Statement> getStatements()
+        {
+            return statements;
+        }
+
+        public List<Function> getFunctions()
+        {
+            return functions;
+        }
+
+        public Canvas getCanvas()
+        {
+            return canvas;
+        }
     
         /// <summary>
         /// 
@@ -21,7 +36,7 @@ namespace Assets.Scripts.AST
         }
 
         public override void Accept(TilemapGenerator tilemapGenerator, ITilemapDSLVisitor v){
-
+            v.visit(tilemapGenerator, this)
         }
     }
 }

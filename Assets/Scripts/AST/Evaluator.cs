@@ -12,7 +12,17 @@ namespace Assets.Scripts.AST
 
         public void visit(TilemapGenerator tilemapGenerator, Program p)
         {
-            throw new System.NotImplementedException();
+            Canvas canvas = p.getCanvas();
+            canvas.Accept(tilemapGenerator, this);
+            foreach (Function function in p.getFunctions())
+            {
+                function.Accept(tilemapGenerator, this);
+            }
+
+            foreach (Statement statement in p.getStatements())
+            {
+                statement.Accept(tilemapGenerator, this);
+            }
         }
 
         public void visit(TilemapGenerator tilemapGenerator, Call c)
