@@ -53,7 +53,7 @@ namespace Assets.Scripts.AST
 
         public void visit(TilemapGenerator tilemapGenerator, Fill f)
         {
-            Color32 color = new Color32(255, f.getColor().getB(), f.getColor().getG(), f.getColor.getR());
+            Color32 color = new Color32(255, f.getColor().GetB(), f.getColor().GetG(), f.getColor().GetR());
             tilemapGenerator.Fill(f.getX(), f.getY(), f.getWidth(), f.getHeight(), color);
         }
 

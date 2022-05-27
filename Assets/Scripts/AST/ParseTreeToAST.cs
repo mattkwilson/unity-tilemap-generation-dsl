@@ -71,10 +71,10 @@ namespace Assets.Scripts.AST
 
         public override ASTBase VisitNoise([NotNull] TilemapDSLParser.NoiseContext context)
         {
-            string name = context.TEXT().GetText();
+            string name = context.TEXT()[0].GetText();
             int x = Int32.Parse(context.INTEGER()[0].GetText());
             int y = Int32.Parse(context.INTEGER()[1].GetText());
-            string noiseMapName = context.TEXT().GetText();
+            string noiseMapName = context.TEXT()[1].GetText();
             return new Noise(name, x, y, noiseMapName);
         }
 
