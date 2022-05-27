@@ -1,4 +1,5 @@
-﻿using Antlr4.Runtime.Misc;
+﻿using System;
+using Antlr4.Runtime.Misc;
 using Antlr4.Runtime.Tree;
 using System.Collections.Generic;
 using UnityEngine;
@@ -39,12 +40,28 @@ namespace Assets.Scripts.AST
 
         public override ASTBase VisitIf([NotNull] TilemapDSLParser.IfContext context)
         {
-            return base.VisitIf(context);
+            string noise = context.TEXT().GetText();
+            string condition = context.CONDITION().GetText();
+            int number = Int32.Parse(context.INTEGER().GetText());
+            List<Statement> statements = new List<Statement>();
+            foreach (TilemapDSLParser.StatementContext statement in context.statement()) {
+                statements.Add(VisitStatement(statement) as Statement);         
+            }
+            return new If(noise, condition, number, statements);
         }
 
         public override ASTBase VisitLoop([NotNull] TilemapDSLParser.LoopContext context)
         {
-            return base.VisitLoop(context);
+            Iterator iterator = (context.VAR().GetText() == "x")? Iterator.X : Iterator.Y;
+            int from = Int32.Parse(context.INTEGER()[0].GetText());
+            int to   = Int32.Parse(context.INTEGER()[1].GetText());
+            int step = Int32.Parse(context.INTEGER()[2].GetText());
+            List<Statement> statements = new List<Statement>();
+            foreach (TilemapDSLParser.StatementContext statementContext in context.statement())
+            {
+                statements.Add(VisitStatement(statementContext) as Statement);
+            }
+            return new Loop(iterator, from, to, step, statements);
         }
 
         public override ASTBase VisitNoise([NotNull] TilemapDSLParser.NoiseContext context)
