@@ -53,7 +53,10 @@ namespace Assets.Scripts.AST
 
         public void visit(TilemapGenerator tilemapGenerator, Fill f)
         {
-            Color32 color = new Color32(255, f.getColor().GetB(), f.getColor().GetG(), f.getColor().GetR());
+            Byte b = Convert.ToByte(f.getColor().GetB());
+            Byte g = Convert.ToByte(f.getColor().GetG());
+            Byte r = Convert.ToByte(f.getColor().GetR());
+            Color32 color = new Color32(255, b, g, r);
             tilemapGenerator.Fill(f.getX(), f.getY(), f.getWidth(), f.getHeight(), color);
         }
 
