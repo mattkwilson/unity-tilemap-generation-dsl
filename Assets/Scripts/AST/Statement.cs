@@ -13,13 +13,9 @@ namespace Assets.Scripts.AST
             positionOffset = new Vector2Int(x, y);
         }
 
-        public int getX() {
-            return positionOffset.x;
+        public Vector2Int GetPositionOffset() {
+            return positionOffset;
         }
-
-        public int getY() {
-            return positionOffset.y;
-
         public void SetLoopX(int x) 
         {
             loopX = x;
@@ -28,6 +24,14 @@ namespace Assets.Scripts.AST
         public void SetLoopY(int y) 
         {
             loopY = y;
+        }
+        
+        public int GetLoopX() {
+            return loopX;
+        }
+        
+        public int GetLoopY() {
+            return loopY;
         }
     }
 }

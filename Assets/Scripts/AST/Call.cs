@@ -5,14 +5,24 @@ namespace Assets.Scripts.AST
 {
     public class Call : Statement
     {
+        private int x, y;
         private string functionName;
 
         public Call(string functionName, int x, int y) {
             this.functionName = functionName;
-            SetPositionOffset(x, y);
+            this.x = x;
+            this.y = y;
         }
 
-        public string getFunctionName() {
+        public int GetX() {
+            return x;
+        }
+
+        public int GetY() {
+            return y;
+        }
+
+        public string GetFunctionName() {
             return functionName;
         }
 
