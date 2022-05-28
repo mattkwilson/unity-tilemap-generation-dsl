@@ -13,6 +13,11 @@ namespace Assets.Scripts.AST
           return width;
         }
 
+		public Canvas(int w, int h) {
+			width = w;
+			height = h;
+		}
+
         public int getHeight() {
           return height;
         }
