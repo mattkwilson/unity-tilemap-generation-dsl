@@ -9,6 +9,8 @@ namespace Assets.Scripts.AST
     {
         private Dictionary<string, Variable> variables = new Dictionary<string, Variable>();
         private Dictionary<string, Function> functions = new Dictionary<string, Function>();
+        private int _loopX = -1;
+        private int _loopY = -1;
 
         public void visit(TilemapGenerator tilemapGenerator, Program p)
         {
@@ -86,37 +88,40 @@ namespace Assets.Scripts.AST
 
         public void visit(TilemapGenerator tilemapGenerator, Loop l)
         {
-            //This mutex restrict nesting to two loops only one over x and the other over y
-            Loop.LockIterator(l.GetIterator());
-            for (int i = l.GetFrom(); i <= l.GetTo(); i += l.GetStep())
+            ref int i = ref _loopX;
+            if (l.GetIterator() == Iterator.Y)
+            {
+                i = ref _loopY;
+            }
+            if (i != -1)
+            {
+                throw new Exception("Loops cannot nest a loop with the same iterator");
+            }
+            for (i = l.GetFrom(); i <= l.GetTo(); i += l.GetStep())
             {
                 foreach (Statement statement in l.GetStatements())
                 {
-                    if (l.GetIterator() == Iterator.X)
+                    if (_loopX != -1)
                     {
-                        statement.SetLoopX(i);
+                        statement.SetX(i);
                     }
-                    else
+                    if (_loopY != -1)
                     {
-                        statement.SetLoopY(i);
+                        statement.SetY(i);
                     }
                     statement.Accept(tilemapGenerator, this);
                 }
             }
-            Loop.FreeIterator(l.GetIterator());
+            i = -1;
         }
 
         public void visit(TilemapGenerator tilemapGenerator, If i)
         {
-            Variable variable = variables[i.GetNoiseVariable()];
-            if (!(variable is Noise))
+            if (variables[i.GetNoiseVariable()] is not Noise noise)
             {
                 throw new Exception("If variable should be of Noise type");
             }
-
-            Noise noise = variable as Noise;
-            // Implement GetInt in Noise
-            // i.SetNoiseValue(noise.GetInt());
+            i.SetNoiseValue(noise.GetNoise());
             if (i.EvaluateCondition())
             {
                 foreach (Statement statement in i.GetStatements())

@@ -14,8 +14,6 @@ namespace Assets.Scripts.AST
     
     public class Loop : Statement
     {
-        private static bool _loopingX = false;
-        private static bool _loopingY = false;
         private readonly Iterator _iterator;
         private readonly int _from;
         private readonly int _to;
@@ -29,36 +27,6 @@ namespace Assets.Scripts.AST
             _to = to;
             _step = step;
             _statements = statements;
-        }
-
-        public static void LockIterator(Iterator i)
-        {
-            bool loopingI = (i == Iterator.X) ? _loopingX : _loopingY;
-            if (loopingI)
-            {
-                throw new Exception("Illegal Loop Nesting");
-            }
-
-            if (i == Iterator.X)
-            {
-                _loopingX = true;
-            }
-            else
-            {
-                _loopingY = true;
-            }
-        }
-        
-        public static void FreeIterator(Iterator i)
-        {
-            if (i == Iterator.X)
-            {
-                _loopingX = false;
-            }
-            else
-            {
-                _loopingY = false;
-            }
         }
 
         public Iterator GetIterator()
