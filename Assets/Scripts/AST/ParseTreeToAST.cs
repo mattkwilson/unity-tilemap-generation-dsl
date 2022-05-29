@@ -13,8 +13,13 @@ namespace Assets.Scripts.AST
             int x;
             int y;
             string functionName = context.TEXT().GetText();
-            if (context.VAR() != null) {
-                if (context.VAR().Length == 1) {
+            switch (context.VAR().Length)
+            {
+                case 2:
+                    x = -1;
+                    y = -1;
+                    break;
+                case 1:
                     if (context.VAR()[0].GetText() == "x") {
                         x = -1;
                         y = Int32.Parse(context.INTEGER()[0].GetText());
@@ -22,13 +27,13 @@ namespace Assets.Scripts.AST
                         x = Int32.Parse(context.INTEGER()[0].GetText());
                         y = -1;
                     }
-                } else {
-                    x = -1;
-                    y = -1;
-                }
-            } else {
-                x = Int32.Parse(context.INTEGER()[0].GetText());
-                y = Int32.Parse(context.INTEGER()[1].GetText());
+                    break;
+                case 0:
+                    x = Int32.Parse(context.INTEGER()[0].GetText());
+                    y = Int32.Parse(context.INTEGER()[1].GetText());
+                    break;
+                default:
+                    throw new Exception("Unexpected error parsing Call");
             }
             return new Call(functionName, x, y);
         }
@@ -56,7 +61,7 @@ namespace Assets.Scripts.AST
             int y;
             int width;
             int height;
-            if (context.VAR() != null) {
+            if (context.VAR().Length > 0) {
                 if (context.VAR().Length == 1) {
                     if (context.VAR()[0].GetText() == "x") {
                         x = -1;
@@ -109,7 +114,7 @@ namespace Assets.Scripts.AST
 
         public override ASTBase VisitLoop([NotNull] TilemapDSLParser.LoopContext context)
         {
-            Iterator iterator = (context.VAR().GetText() == "x")? Iterator.X : Iterator.Y;
+            IteratorType iterator = (context.VAR().GetText() == "x")? IteratorType.X : IteratorType.Y;
             int from = Int32.Parse(context.INTEGER()[0].GetText());
             int to   = Int32.Parse(context.INTEGER()[1].GetText());
             int step = Int32.Parse(context.INTEGER()[2].GetText());

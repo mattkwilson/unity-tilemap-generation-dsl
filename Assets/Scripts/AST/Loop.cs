@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.AST
 {
-    public enum Iterator
+    public enum IteratorType
     {
         X,
         Y
@@ -14,24 +14,39 @@ namespace Assets.Scripts.AST
     
     public class Loop : Statement
     {
-        private readonly Iterator _iterator;
+        private LoopVariable loopVariable;
         private readonly int _from;
         private readonly int _to;
         private readonly int _step;
         private readonly List<Statement> _statements;
 
-        public Loop(Iterator iterator, int from, int to, int step, List<Statement> statements)
+        public Loop(IteratorType iterator, int from, int to, int step, List<Statement> statements)
         {
-            _iterator = iterator;
+            loopVariable = new LoopVariable(iterator, from);
             _from = from;
             _to = to;
             _step = step;
             _statements = statements;
+            
+            foreach(Statement statement in statements) {
+                statement.SetParent(this);
+            }
         }
 
-        public Iterator GetIterator()
+        public Loop TryGetNestedLoop() {
+            Statement tempParent = parent;
+            while(tempParent != null) {
+                if(tempParent is Loop) {
+                    return tempParent as Loop;
+                }
+                tempParent = tempParent.Parent;
+            }
+            return null;
+        }
+
+        public LoopVariable GetLoopVariable()
         {
-            return _iterator;
+            return loopVariable;
         }
 
         public int GetFrom()

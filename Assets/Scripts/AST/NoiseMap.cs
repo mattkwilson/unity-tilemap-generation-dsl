@@ -5,12 +5,10 @@ namespace Assets.Scripts.AST
 {
     public class NoiseMap : Variable
     {
-        private readonly string _name;
         private readonly int _frequency;
         private readonly int _scale;
-        public NoiseMap(string name, int frequency, int scale)
+        public NoiseMap(string name, int frequency, int scale) : base(name)
         {
-            _name = name;
             _frequency = frequency;
             _scale = scale;
         }

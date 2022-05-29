@@ -5,7 +5,6 @@ namespace Assets.Scripts.AST
 {
     public class Noise : Variable
     {
-        private readonly string _name;
         private readonly int _x;
         private readonly int _y;
         private readonly string _noiseMapName;
@@ -13,9 +12,8 @@ namespace Assets.Scripts.AST
         private int _frequency;
         private int _scale;
         
-        public Noise(string name, int x, int y, string noiseMapName)
+        public Noise(string name, int x, int y, string noiseMapName) : base(name)
         {
-            _name = name;
             _x = x;
             _y = y;
             _noiseMapName = noiseMapName;

@@ -5,46 +5,21 @@ namespace Assets.Scripts.AST
 {
     public abstract class Statement : Element
     {
-        protected Vector2Int positionOffset;
+        protected Statement parent;
+        public Statement Parent { get {return parent;}}
+        protected Vector2Int position;
+
+        public void SetParent(Statement parent) {
+            this.parent = parent;
+        }
         
-        // set to true in concrete class constructor if x or y are passed as loop variables
-        protected bool IsLoopX; 
-        protected bool IsLoopY;
-        
-        // initialize in concrete class constructor
-        protected int X;
-        protected int Y;
-        
-        public void SetPositionOffset(int x, int y) {
-            positionOffset = new Vector2Int(x, y);
+        public void SetPosition(int x, int y) {
+            position = new Vector2Int(x, y);
         }
 
-        public Vector2Int GetPositionOffset() {
-            return positionOffset;
-        }
-
-        public void SetX(int x) 
-        {
-            if (IsLoopX)
-            {
-                X = x;
-            }
+        public Vector2Int GetPosition() {
+            return position;
         }
         
-        public void SetY(int y) 
-        {
-            if (IsLoopY)
-            {
-                Y = y;
-            }
-        }
-        
-        public int GetX() {
-            return X;
-        }
-        
-        public int GetY() {
-            return Y;
-        }
     }
 }
