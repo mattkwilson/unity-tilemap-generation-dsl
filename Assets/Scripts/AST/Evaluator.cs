@@ -86,6 +86,19 @@ namespace Assets.Scripts.AST
             f.SetScope(functions.Count); // this works as long as we never remove any functions from the dictionary
         }
 
+        private void EvaluateStatementXY(TilemapGenerator tilemapGenerator, Statement statement)
+        {
+            if (_loopX != -1)
+            {
+                statement.SetX(_loopX);
+            }
+            if (_loopY != -1)
+            {
+                statement.SetY(_loopY);
+            }
+            statement.Accept(tilemapGenerator, this);
+        }
+
         public void visit(TilemapGenerator tilemapGenerator, Loop l)
         {
             ref int i = ref _loopX;
@@ -101,15 +114,7 @@ namespace Assets.Scripts.AST
             {
                 foreach (Statement statement in l.GetStatements())
                 {
-                    if (_loopX != -1)
-                    {
-                        statement.SetX(i);
-                    }
-                    if (_loopY != -1)
-                    {
-                        statement.SetY(i);
-                    }
-                    statement.Accept(tilemapGenerator, this);
+                    EvaluateStatementXY(tilemapGenerator, statement);
                 }
             }
             i = -1;
@@ -126,7 +131,7 @@ namespace Assets.Scripts.AST
             {
                 foreach (Statement statement in i.GetStatements())
                 {
-                    statement.Accept(tilemapGenerator, this);
+                    EvaluateStatementXY(tilemapGenerator, statement);
                 }
             }
         }
