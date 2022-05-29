@@ -15,7 +15,8 @@ namespace Assets.Scripts.AST
         public void Execute(TilemapGenerator tilemapGenerator, ITilemapDSLVisitor v, int x, int y) {
             foreach (Statement statement in statements) {
                 statement.SetScope(this.scope);
-                statement.SetPositionOffset(x, y);
+                statement.SetPosition(x, y);
+                statement.SetParent(null);
                 v.visit(tilemapGenerator, statement);
             }                
         }

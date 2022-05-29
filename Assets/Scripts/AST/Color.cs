@@ -5,13 +5,11 @@ namespace Assets.Scripts.AST
 {
     public class Color : Variable
     {
-        private readonly string _name;
         private readonly int _r;
         private readonly int _g;
         private readonly int _b;
-        public Color(string name, int r, int g, int b)
+        public Color(string name, int r, int g, int b) : base(name)
         {
-            _name = name;
             _r = r;
             _g = g;
             _b = b;

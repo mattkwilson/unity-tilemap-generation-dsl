@@ -17,6 +17,10 @@ namespace Assets.Scripts.AST
             _condition = condition;
             _number = number;
             _statements = statements;
+
+            foreach(Statement statement in statements) {
+                statement.SetParent(this);
+            }
         }
 
         public void SetNoiseValue(int value)

@@ -11,6 +11,10 @@ namespace Assets.Scripts.AST
 
     public abstract class Variable : Statement
     {
+        protected readonly string _name;
 
+        public Variable(string name) {
+            _name = name;
+        }
     }
 }
