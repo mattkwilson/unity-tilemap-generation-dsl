@@ -17,7 +17,7 @@ namespace Assets.Scripts.AST
                 statement.SetScope(this.scope);
                 statement.SetPosition(x, y);
                 statement.SetParent(null);
-                v.visit(tilemapGenerator, statement);
+                statement.Accept(tilemapGenerator, v);
             }                
         }
 
