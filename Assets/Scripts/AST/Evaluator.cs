@@ -9,6 +9,8 @@ namespace Assets.Scripts.AST
     {
         private Dictionary<string, Variable> variables = new Dictionary<string, Variable>();
         private Dictionary<string, Function> functions = new Dictionary<string, Function>();
+        private int _loopX = -1;
+        private int _loopY = -1;
 
         public void visit(TilemapGenerator tilemapGenerator, Program p)
         {
@@ -84,44 +86,52 @@ namespace Assets.Scripts.AST
             f.SetScope(functions.Count); // this works as long as we never remove any functions from the dictionary
         }
 
+        private void EvaluateStatementXY(TilemapGenerator tilemapGenerator, Statement statement)
+        {
+            if (_loopX != -1)
+            {
+                statement.SetX(_loopX);
+            }
+            if (_loopY != -1)
+            {
+                statement.SetY(_loopY);
+            }
+            statement.Accept(tilemapGenerator, this);
+        }
+
         public void visit(TilemapGenerator tilemapGenerator, Loop l)
         {
-            //This mutex restrict nesting to two loops only one over x and the other over y
-            Loop.LockIterator(l.GetIterator());
-            for (int i = l.GetFrom(); i <= l.GetTo(); i += l.GetStep())
+            ref int i = ref _loopX;
+            if (l.GetIterator() == Iterator.Y)
+            {
+                i = ref _loopY;
+            }
+            if (i != -1)
+            {
+                throw new Exception("Loops cannot nest a loop with the same iterator");
+            }
+            for (i = l.GetFrom(); i <= l.GetTo(); i += l.GetStep())
             {
                 foreach (Statement statement in l.GetStatements())
                 {
-                    if (l.GetIterator() == Iterator.X)
-                    {
-                        statement.SetLoopX(i);
-                    }
-                    else
-                    {
-                        statement.SetLoopY(i);
-                    }
-                    statement.Accept(tilemapGenerator, this);
+                    EvaluateStatementXY(tilemapGenerator, statement);
                 }
             }
-            Loop.FreeIterator(l.GetIterator());
+            i = -1;
         }
 
         public void visit(TilemapGenerator tilemapGenerator, If i)
         {
-            Variable variable = variables[i.GetNoiseVariable()];
-            if (!(variable is Noise))
+            if (variables[i.GetNoiseVariable()] is not Noise noise)
             {
                 throw new Exception("If variable should be of Noise type");
             }
-
-            Noise noise = variable as Noise;
-            // Implement GetInt in Noise
-            // i.SetNoiseValue(noise.GetInt());
+            i.SetNoiseValue(noise.GetNoise());
             if (i.EvaluateCondition())
             {
                 foreach (Statement statement in i.GetStatements())
                 {
-                    statement.Accept(tilemapGenerator, this);
+                    EvaluateStatementXY(tilemapGenerator, statement);
                 }
             }
         }
