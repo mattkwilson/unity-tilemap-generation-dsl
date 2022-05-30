@@ -25,6 +25,10 @@ namespace Assets.Scripts.AST
             loopVariable = new LoopVariable(iterator, from);
             _from = from;
             _to = to;
+            if (step < 1)
+            {
+                throw new Exception("Step size cannot be less than 1");
+            }
             _step = step;
             _statements = statements;
             
