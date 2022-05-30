@@ -3,7 +3,7 @@ options { tokenVocab=TilemapDSLLexer; }
 
 program : canvas (statement | function)*;
 statement : (loop|if|fill|call|variable);
-variable : (color|noiseMap|noise);
+variable : (color|noiseMap|noise|texture);
 // 'Canvas' width height
 canvas : CANVAS_START INTEGER INTEGER;
 // 'Loop' (x 0 to 100 step 1)
