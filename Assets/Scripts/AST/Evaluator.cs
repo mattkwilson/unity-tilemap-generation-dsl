@@ -113,7 +113,7 @@ namespace Assets.Scripts.AST
                     Byte b = Convert.ToByte(color.GetB());
                     Byte g = Convert.ToByte(color.GetG());
                     Byte r = Convert.ToByte(color.GetR());
-                    Color32 color32 = new Color32(255, b, g, r);
+                    Color32 color32 = new Color32(r, g, b, 255);
 
                     if (x != null && y != null) {
                         tilemapGenerator.Fill(x.GetValue()+f.GetPosition().x, y.GetValue()+f.GetPosition().y, f.GetWidth(), f.GetHeight(), color32);  
