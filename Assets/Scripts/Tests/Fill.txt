@@ -1,0 +1,6 @@
+Canvas 100 100
+Color: red 255 0 0
+Color: blue 0 0 255
+
+Fill 0 0 10 10 blue
+Fill 0 0 100 100 red

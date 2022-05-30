@@ -16,5 +16,9 @@ namespace Assets.Scripts.AST
         public Variable(string name) {
             _name = name;
         }
+
+        public string GetName() {
+            return _name;
+        }
     }
 }

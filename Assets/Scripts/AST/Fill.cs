@@ -6,14 +6,14 @@ namespace Assets.Scripts.AST
     public class Fill : Statement
     {
         private int x, y, width, height;
-        private string color;
+        private string texture;
 
-        public Fill(int x, int y, int width, int height, string color) {
+        public Fill(int x, int y, int width, int height, string texture) {
             this.x = x;
             this.y = y;
             this.width = width;
             this.height = height;
-            this.color = color;
+            this.texture = texture;
         }
 
         public int GetX() {
@@ -32,8 +32,8 @@ namespace Assets.Scripts.AST
             return height;
         }
 
-        public string GetColor() {
-            return color;
+        public string GetTexture() {
+            return texture;
         }
 
 

@@ -73,13 +73,13 @@ namespace Assets.Scripts.AST
             variables.Add(c.GetName(), c);
         }
 
+        public void visit(TilemapGenerator tilemapGenerator, Texture t)
+        {
+            variables.Add(t.GetName(), t);
+        }
+
         public void visit(TilemapGenerator tilemapGenerator, Fill f)
         {
-            Color color = (Color)variables[f.GetColor()];
-            Byte b = Convert.ToByte(color.GetB());
-            Byte g = Convert.ToByte(color.GetG());
-            Byte r = Convert.ToByte(color.GetR());
-            Color32 color32 = new Color32(255, b, g, r);
             LoopVariable x = null, y = null;
             if(f.GetX() == -1) {
                 x = findMatchingLoopVar(f, IteratorType.X);
@@ -93,15 +93,40 @@ namespace Assets.Scripts.AST
                     throw new Exception("No loop variable named: y");
                 }
             }
-            
-            if (x != null && y != null) {
-                tilemapGenerator.Fill(x.GetValue()+f.GetPosition().x, y.GetValue()+f.GetPosition().y, f.GetWidth(), f.GetHeight(), color32);  
-            } else if (x != null) {
-                tilemapGenerator.Fill(x.GetValue()+f.GetPosition().x, f.GetY()+f.GetPosition().y, f.GetWidth(), f.GetHeight(), color32); 
-            } else if (y != null) {
-                tilemapGenerator.Fill(f.GetX()+f.GetPosition().x, y.GetValue()+f.GetPosition().y, f.GetWidth(), f.GetHeight(), color32); 
+            Variable variable;
+            if(variables.TryGetValue(f.GetTexture(), out variable)) {
+                if(variable is Texture) {
+                    Texture texture = variable as Texture;
+                    
+                    if (x != null && y != null) {
+                        tilemapGenerator.Fill(x.GetValue()+f.GetPosition().x, y.GetValue()+f.GetPosition().y, f.GetWidth(), f.GetHeight(), texture);  
+                    } else if (x != null) {
+                        tilemapGenerator.Fill(x.GetValue()+f.GetPosition().x, f.GetY()+f.GetPosition().y, f.GetWidth(), f.GetHeight(), texture); 
+                    } else if (y != null) {
+                        tilemapGenerator.Fill(f.GetX()+f.GetPosition().x, y.GetValue()+f.GetPosition().y, f.GetWidth(), f.GetHeight(), texture); 
+                    } else {
+                        tilemapGenerator.Fill(f.GetX()+f.GetPosition().x, f.GetY()+f.GetPosition().y, f.GetWidth(), f.GetHeight(), texture);
+                    }
+                } else {
+                    // is color
+                    Color color = variable as Color;
+                    Byte b = Convert.ToByte(color.GetB());
+                    Byte g = Convert.ToByte(color.GetG());
+                    Byte r = Convert.ToByte(color.GetR());
+                    Color32 color32 = new Color32(r, g, b, 255);
+
+                    if (x != null && y != null) {
+                        tilemapGenerator.Fill(x.GetValue()+f.GetPosition().x, y.GetValue()+f.GetPosition().y, f.GetWidth(), f.GetHeight(), color32);  
+                    } else if (x != null) {
+                        tilemapGenerator.Fill(x.GetValue()+f.GetPosition().x, f.GetY()+f.GetPosition().y, f.GetWidth(), f.GetHeight(), color32); 
+                    } else if (y != null) {
+                        tilemapGenerator.Fill(f.GetX()+f.GetPosition().x, y.GetValue()+f.GetPosition().y, f.GetWidth(), f.GetHeight(), color32); 
+                    } else {
+                        tilemapGenerator.Fill(f.GetX()+f.GetPosition().x, f.GetY()+f.GetPosition().y, f.GetWidth(), f.GetHeight(), color32);
+                    }
+                }
             } else {
-                tilemapGenerator.Fill(f.GetX()+f.GetPosition().x, f.GetY()+f.GetPosition().y, f.GetWidth(), f.GetHeight(), color32);
+                throw new Exception("Variable referenced within Fill does not exist");
             }
         }
 
@@ -122,9 +147,9 @@ namespace Assets.Scripts.AST
                 }
                 
                 // uncomment this in future if we add more potential loop variables
-                // if(nestedLoop.TryGetNestedLoop() != null) {
-                //     throw new Exception("Can not have more than 2 nested loops");
-                // }
+                if(nestedLoop.TryGetNestedLoop() != null) {
+                    throw new Exception("Can not have more than 2 nested loops");
+                }
             }
             for (int i = loop.GetFrom(); i <= loop.GetTo(); i += loop.GetStep())
             {
@@ -154,9 +179,12 @@ namespace Assets.Scripts.AST
 
         public void visit(TilemapGenerator tilemapGenerator, Noise n)
         {
-            if (variables[n.GetNoiseMapName()] is NoiseMap)
-            {
-                n.PutNoiseMapInfo(variables[n.GetNoiseMapName()] as NoiseMap);
+            string noiseMapName = n.GetNoiseMapName();
+            Variable noiseMap = null;
+            if(variables.TryGetValue(noiseMapName, out noiseMap) && noiseMap is NoiseMap) {
+                n.CalculateNoise(noiseMap as NoiseMap);
+            } else {
+                throw new Exception("Invalid NoiseMap reference in Noise variable");
             }
             variables.Add(n.GetName(), n);
         }
