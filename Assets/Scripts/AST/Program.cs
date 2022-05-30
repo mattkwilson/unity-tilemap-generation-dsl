@@ -6,14 +6,12 @@ namespace Assets.Scripts.AST
     public class Program : ASTBase
     {
         private Canvas _canvas;
-        private Dictionary<string, Variable> _variables;
         private List<Statement> _statements;
         private List<Function> _functions;
 
-        public Program(Canvas canvas, Dictionary<string, Variable> variables, List<Statement> statements, List<Function> functions)
+        public Program(Canvas canvas, List<Statement> statements, List<Function> functions)
         {
             _canvas = canvas;
-            _variables = variables;
             _statements = statements;
             _functions = functions;
         }

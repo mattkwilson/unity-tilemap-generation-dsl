@@ -69,6 +69,13 @@ namespace Assets.Scripts.AST
             return _statements;
         }
 
+        public override void SetPosition(int x, int y) {
+            foreach (Statement statement in _statements)
+            {
+                statement.SetPosition(x,y);
+            }
+        }
+
         public override void Accept(TilemapGenerator tilemapGenerator, ITilemapDSLVisitor v)
         {
             v.visit(tilemapGenerator, this);

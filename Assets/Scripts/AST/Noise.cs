@@ -8,27 +8,19 @@ namespace Assets.Scripts.AST
         private readonly int _x;
         private readonly int _y;
         private readonly string _noiseMapName;
-        private int _noise;
-        private int _frequency;
-        private int _scale;
+        private int _noiseValue;
         
         public Noise(string name, int x, int y, string noiseMapName) : base(name)
         {
             _x = x;
             _y = y;
             _noiseMapName = noiseMapName;
-            CalculateNoise();
         }
-
-        public void PutNoiseMapInfo(NoiseMap noiseMap)
+        public void CalculateNoise(NoiseMap noiseMap)
         {
-            _frequency = noiseMap.GetFrequency();
-            _scale = noiseMap.GetScale();
-        }
-
-        private void CalculateNoise()
-        {
-            
+            float frequency = noiseMap.GetFrequency();
+            int scale = noiseMap.GetScale();
+            _noiseValue = Mathf.RoundToInt(Mathf.PerlinNoise(_x / frequency, _y / frequency) * scale);
         }
 
         public override void Accept(TilemapGenerator tilemapGenerator, ITilemapDSLVisitor v){
@@ -37,10 +29,7 @@ namespace Assets.Scripts.AST
 
         public int GetNoise()
         {
-            return _noise;
-        }
-        public string GetName() {
-            return _name;
+            return _noiseValue;
         }
         
         public int GetX() {

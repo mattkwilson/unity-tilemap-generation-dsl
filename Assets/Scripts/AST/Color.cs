@@ -19,10 +19,6 @@ namespace Assets.Scripts.AST
             v.visit(tilemapGenerator, this);
         }
         
-        public string GetName() {
-            return _name;
-        }
-        
         public int GetR() {
             return _r;
         }

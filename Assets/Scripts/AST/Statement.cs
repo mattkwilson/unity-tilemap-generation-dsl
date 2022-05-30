@@ -13,7 +13,7 @@ namespace Assets.Scripts.AST
             this.parent = parent;
         }
         
-        public void SetPosition(int x, int y) {
+        public virtual void SetPosition(int x, int y) {
             position = new Vector2Int(x, y);
         }
 

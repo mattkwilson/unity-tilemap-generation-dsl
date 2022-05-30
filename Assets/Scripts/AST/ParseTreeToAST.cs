@@ -45,6 +45,13 @@ namespace Assets.Scripts.AST
 			return new Canvas(w, h);
         }
 
+        public override ASTBase VisitTexture([NotNull] TilemapDSLParser.TextureContext context)
+        {
+            string name = context.TEXT().GetText();
+            int index = Int32.Parse(context.INTEGER().GetText());
+            return new Texture(name, index);
+        }
+
         public override ASTBase VisitColor([NotNull] TilemapDSLParser.ColorContext context)
         {
             string name = context.TEXT().GetText();
@@ -86,8 +93,8 @@ namespace Assets.Scripts.AST
                 width = Int32.Parse(context.INTEGER()[2].GetText());
                 height = Int32.Parse(context.INTEGER()[3].GetText());
             }
-            string color = context.TEXT().GetText();
-            return new Fill(x, y, width, height, color);
+            string texture = context.TEXT().GetText();
+            return new Fill(x, y, width, height, texture);
         }
 
         public override ASTBase VisitFunction([NotNull] TilemapDSLParser.FunctionContext context)
@@ -129,8 +136,34 @@ namespace Assets.Scripts.AST
         public override ASTBase VisitNoise([NotNull] TilemapDSLParser.NoiseContext context)
         {
             string name = context.TEXT()[0].GetText();
-            int x = Int32.Parse(context.INTEGER()[0].GetText());
-            int y = Int32.Parse(context.INTEGER()[1].GetText());
+            int x;
+            int y;
+            if (context.VAR().Length > 0)
+            {
+                if (context.VAR().Length == 1)
+                {
+                    if (context.VAR()[0].GetText() == "x")
+                    {
+                        x = -1;
+                        y = Int32.Parse(context.INTEGER()[0].GetText());
+                    }
+                    else
+                    {
+                        x = Int32.Parse(context.INTEGER()[0].GetText());
+                        y = -1;
+                    }
+                }
+                else
+                {
+                    x = -1;
+                    y = -1;                    
+                }
+            }
+            else
+            {
+                x = Int32.Parse(context.INTEGER()[0].GetText());
+                y = Int32.Parse(context.INTEGER()[1].GetText());                
+            }         
             string noiseMapName = context.TEXT()[1].GetText();
             return new Noise(name, x, y, noiseMapName);
         }
@@ -147,7 +180,6 @@ namespace Assets.Scripts.AST
         {
             List<Function> functions = new List<Function>();
 			List<Statement> statements = new List<Statement>();
-			Dictionary<string, Variable> variables = new Dictionary<string, Variable>();
 			Canvas canvas;
 			foreach (TilemapDSLParser.StatementContext statementContext in context.statement())
             {
@@ -158,7 +190,7 @@ namespace Assets.Scripts.AST
                 functions.Add(VisitFunction(functionContext) as Function);
             }
 			canvas = VisitCanvas(context.canvas()) as Canvas;
-			return new Program(canvas, variables, statements, functions);
+			return new Program(canvas, statements, functions);
         }
 
         public override ASTBase VisitStatement([NotNull] TilemapDSLParser.StatementContext context)
