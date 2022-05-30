@@ -186,7 +186,11 @@ namespace Assets.Scripts.AST
             } else {
                 throw new Exception("Invalid NoiseMap reference in Noise variable");
             }
-            variables.Add(n.GetName(), n);
+
+            if (!variables.TryAdd(n.GetName(), n))
+            {
+                variables[n.GetName()] = n;
+            }
         }
 
         public void visit(TilemapGenerator tilemapGenerator, NoiseMap n)

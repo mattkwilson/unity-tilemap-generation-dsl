@@ -2,6 +2,7 @@
 using Antlr4.Runtime.Misc;
 using Antlr4.Runtime.Tree;
 using System.Collections.Generic;
+using UnityEditor.Timeline;
 using UnityEngine;
 
 namespace Assets.Scripts.AST
@@ -206,6 +207,31 @@ namespace Assets.Scripts.AST
 			} else {
 				return VisitVariable(context.variable());
 			}
+        }
+
+        public override ASTBase VisitVariable([NotNull] TilemapDSLParser.VariableContext context)
+        {
+            if (context.color() != null)
+            {
+                return VisitColor(context.color());
+            }
+
+            if (context.noise() != null)
+            {
+                return VisitNoise(context.noise());
+            }
+
+            if (context.noiseMap() != null)
+            {
+                return VisitNoiseMap(context.noiseMap());
+            }
+
+            if (context.texture() != null)
+            {
+                return VisitTexture(context.texture());
+            }
+
+            throw new Exception("Unexpected error parsing variable");
         }
 
     }
