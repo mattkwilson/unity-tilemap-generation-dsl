@@ -147,9 +147,9 @@ namespace Assets.Scripts.AST
                 }
                 
                 // uncomment this in future if we add more potential loop variables
-                // if(nestedLoop.TryGetNestedLoop() != null) {
-                //     throw new Exception("Can not have more than 2 nested loops");
-                // }
+                if(nestedLoop.TryGetNestedLoop() != null) {
+                    throw new Exception("Can not have more than 2 nested loops");
+                }
             }
             for (int i = loop.GetFrom(); i <= loop.GetTo(); i += loop.GetStep())
             {
