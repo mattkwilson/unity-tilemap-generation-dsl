@@ -11,7 +11,7 @@ IF_START: 'If' WS* -> mode(TEXT_MODE);
 IF_END: 'EndIf';
 
 FILL_START: 'Fill';
-TEXTURE_START: 'Texture:';
+TEXTURE_START: 'Texture:' WS* -> mode(TEXT_MODE);
 COLOR_START: 'Color:' WS* -> mode(TEXT_MODE);
 FILL_IN: 'in' WS* -> mode(TEXT_MODE);
 NOISEMAP_START: 'NoiseMap:' WS* -> mode(TEXT_MODE);

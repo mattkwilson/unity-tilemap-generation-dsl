@@ -47,6 +47,7 @@ namespace Assets.Scripts.AST
 
         public override ASTBase VisitTexture([NotNull] TilemapDSLParser.TextureContext context)
         {
+            Debug.Log("parsing Texture");
             string name = context.TEXT().GetText();
             int index = Int32.Parse(context.INTEGER().GetText());
             return new Texture(name, index);
