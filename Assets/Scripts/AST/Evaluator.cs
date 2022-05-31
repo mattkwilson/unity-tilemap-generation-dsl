@@ -182,7 +182,28 @@ namespace Assets.Scripts.AST
             string noiseMapName = n.GetNoiseMapName();
             Variable noiseMap = null;
             if(variables.TryGetValue(noiseMapName, out noiseMap) && noiseMap is NoiseMap) {
-                n.CalculateNoise(noiseMap as NoiseMap);
+                LoopVariable x = null, y = null;
+                if(n.GetX() == -1) {
+                    x = findMatchingLoopVar(n, IteratorType.X);
+                    if(x == null) {
+                        throw new Exception("No loop variable named: x");
+                    }
+                }
+                if(n.GetY() == -1) {
+                    y = findMatchingLoopVar(n, IteratorType.Y);
+                    if(y == null) {
+                        throw new Exception("No loop variable named: y");
+                    }
+                }
+                if (n.GetX() == -1 && n.GetY() == -1) {
+                    n.CalculateNoise(n.GetPosition().x + x.GetValue(), n.GetPosition().y + y.GetValue(), noiseMap as NoiseMap);
+                } else if (n.GetX() == -1) {
+                    n.CalculateNoise(n.GetPosition().x + x.GetValue(), n.GetPosition().y + n.GetY(), noiseMap as NoiseMap);
+                } else if (n.GetY() == -1) {
+                    n.CalculateNoise(n.GetPosition().x + n.GetX(), n.GetPosition().y + y.GetValue(), noiseMap as NoiseMap);
+                } else {
+                    n.CalculateNoise(n.GetPosition().x + n.GetX(), n.GetPosition().y + n.GetY(), noiseMap as NoiseMap);
+                }
             } else {
                 throw new Exception("Invalid NoiseMap reference in Noise variable");
             }
