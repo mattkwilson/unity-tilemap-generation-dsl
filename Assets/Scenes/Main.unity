@@ -204,8 +204,9 @@ MonoBehaviour:
   - {fileID: 473036698, guid: 239ee64c5fede2c40b15a3ea62cf41ae, type: 3}
   - {fileID: -411791346, guid: 239ee64c5fede2c40b15a3ea62cf41ae, type: 3}
   TextureSize: 16
-  DSLInput: "Canvas 100 100\r\nTexture: Grass 1\n\r\nLoop x 0 to 10 step 1\n    Loop
-    y 0 to 10 step 1\n        Fill x y 1 1 in Grass\n    EndLoop\r\nEndLoop\r\n\n\r\n"
+  DSLInput: "Canvas 100 100\r\n\n\rFunction: Name (Grass, Blue)\n\tFill x y 1 1 in
+    Grass\n\tFill x y 1 1 in Blue\nEndFunction\n\n\nTexture: Test 1\nColor: Red 255
+    0 0\n\nCall Name 10 10 (Test, Red)\n\n"
 --- !u!4 &141094708
 Transform:
   m_ObjectHideFlags: 0

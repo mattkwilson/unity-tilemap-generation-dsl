@@ -21,8 +21,8 @@ NOISE_FROM: 'from' WS* -> mode(TEXT_MODE);
 FUNCTION_START: 'Function:' WS* -> mode(TEXT_MODE);
 FUNCTION_END: 'EndFunction';
 CALL: 'Call' WS* -> mode(TEXT_MODE);
-FUNCTION_PARAM_START: '(';
-FUNCTION_PARAM_SEP: ',';
+FUNCTION_PARAM_START: '(' WS* -> mode(TEXT_MODE);
+FUNCTION_PARAM_SEP: ',' WS* -> mode(TEXT_MODE);
 FUNCTION_PARAM_END: ')';
 
 INTEGER: ([1-9][0-9]*|'0');
