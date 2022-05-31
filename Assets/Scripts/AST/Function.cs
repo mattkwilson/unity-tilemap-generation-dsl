@@ -8,6 +8,8 @@ namespace Assets.Scripts.AST
         private string name;
         private List<Statement> statements;
 
+        private List<string> params; 
+
         public string GetName() {
             return name;
         }
