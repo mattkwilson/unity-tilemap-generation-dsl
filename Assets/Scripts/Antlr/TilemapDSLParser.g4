@@ -1,7 +1,7 @@
 parser grammar TilemapDSLParser;
 options { tokenVocab=TilemapDSLLexer; }
 
-program : canvas (statement | function)*;
+program : function* canvas statement*;
 statement : (loop|if|fill|call|variable);
 variable : (color|noiseMap|noise|texture);
 // 'Canvas' width height
