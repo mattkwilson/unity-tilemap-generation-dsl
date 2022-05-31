@@ -35,4 +35,4 @@ WS: [\r\n\t ] -> channel(HIDDEN);
 // TODO: Need to restrict variable names, can't use 'x' 'y' (reserved for loops)
 
 mode TEXT_MODE;
-TEXT: [a-zA-Z]+ -> mode(DEFAULT_MODE);
+TEXT: [a-zA-Z0-9]+ -> mode(DEFAULT_MODE);

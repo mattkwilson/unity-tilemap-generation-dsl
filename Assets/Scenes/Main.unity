@@ -156,12 +156,28 @@ MonoBehaviour:
   BaseTileSprite: {fileID: 21300000, guid: a5e199114f3ce934fb3e323090cb473f, type: 3}
   Textures:
   - {fileID: -1070942781, guid: 239ee64c5fede2c40b15a3ea62cf41ae, type: 3}
+  - {fileID: 1060004617, guid: 239ee64c5fede2c40b15a3ea62cf41ae, type: 3}
+  - {fileID: 1535905514, guid: 4b7bcd59505fecf4a85e49583de3a465, type: 3}
+  - {fileID: -1023544834, guid: 4b7bcd59505fecf4a85e49583de3a465, type: 3}
+  - {fileID: -1487926888, guid: 4b7bcd59505fecf4a85e49583de3a465, type: 3}
+  - {fileID: 664239215, guid: 4b7bcd59505fecf4a85e49583de3a465, type: 3}
+  - {fileID: 1617997108, guid: 4b7bcd59505fecf4a85e49583de3a465, type: 3}
+  - {fileID: -190791776, guid: 4b7bcd59505fecf4a85e49583de3a465, type: 3}
   - {fileID: 473036698, guid: 239ee64c5fede2c40b15a3ea62cf41ae, type: 3}
-  - {fileID: -411791346, guid: 239ee64c5fede2c40b15a3ea62cf41ae, type: 3}
+  - {fileID: 1565518853, guid: 239ee64c5fede2c40b15a3ea62cf41ae, type: 3}
+  - {fileID: 1158258363, guid: a77ba833122de694d907de79ed67b117, type: 3}
+  - {fileID: -1372084676, guid: a77ba833122de694d907de79ed67b117, type: 3}
+  - {fileID: -1704619499, guid: a77ba833122de694d907de79ed67b117, type: 3}
+  - {fileID: -1772378825, guid: a77ba833122de694d907de79ed67b117, type: 3}
+  - {fileID: 1298956454, guid: a77ba833122de694d907de79ed67b117, type: 3}
   TextureSize: 16
-  DSLInput: "\rFunction: Car (Sand, Blue)\n\tFill 1 1 1 1 in Blue\n\tFill 1 2 1 1
-    in Test\nEndFunction\n\nCanvas 100 100\r\nTexture: Test 1\nColor: Red 255 0 0\n\n\n\nCall
-    Car 10 10 (Test, Red)\n\n"
+  DSLInput: "\rFunction: GenerateOcean\n\tLoop x 0 to 100 step 1 \n\tLoop y 0 to
+    100 step 1\n\tFill x y 1 1 in Shore5\nEndFunction\n\nCanvas 100 100\r\n\nTexture:
+    Grass 0\nTexture: LightGrass 1\nTexture: TexturedGrass1 2\nTexture: TexturedGrass2
+    3\nTexture: TexturedGrass3 4\nTexture: TexturedGrass4 5\nTexture: TexturedGrass5
+    6\nTexture: TexturedGrass6 7\nTexture: Sand1 8\nTexture: Sand2 9\nTexture: Shore1
+    10\nTexture: Shore2 11\nTexture: Shore3 12\nTexture: Shore4 13\nTexture: Shore5
+    14\n\nNoiseMap\n\n\nCall Car 10 10 (Test, Red)\n\n"
 --- !u!4 &141094708
 Transform:
   m_ObjectHideFlags: 0
