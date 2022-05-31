@@ -8,10 +8,14 @@ namespace Assets.Scripts.AST
         private string name;
         private List<Statement> statements;
 
-        private List<string> params; 
+        private List<string> parameters; 
 
         public string GetName() {
             return name;
+        }
+
+        public List<string> GetParameters() {
+            return parameters;
         }
 
         public void Execute(TilemapGenerator tilemapGenerator, ITilemapDSLVisitor v, int x, int y) {
@@ -23,9 +27,10 @@ namespace Assets.Scripts.AST
             }                
         }
 
-        public Function(string name, List<Statement> statements) {
+        public Function(string name, List<Statement> statements, List<string> parameters) {
             this.name = name;
             this.statements = statements;
+            this.parameters = parameters;
         }
 
         public override void Accept(TilemapGenerator tilemapGenerator, ITilemapDSLVisitor v){

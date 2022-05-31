@@ -1,4 +1,4 @@
-using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Assets.Scripts.AST
@@ -7,11 +7,13 @@ namespace Assets.Scripts.AST
     {
         private int x, y;
         private string functionName;
+        private List<string> args;
 
-        public Call(string functionName, int x, int y) {
+        public Call(string functionName, int x, int y, List<string> args) {
             this.functionName = functionName;
             this.x = x;
             this.y = y;
+            this.args = args;
         }
 
         public int GetX() {
@@ -24,6 +26,10 @@ namespace Assets.Scripts.AST
 
         public string GetFunctionName() {
             return functionName;
+        }
+
+        public List<string> GetArgs() {
+            return args;
         }
 
         public override void Accept(TilemapGenerator tilemapGenerator, ITilemapDSLVisitor v) {
