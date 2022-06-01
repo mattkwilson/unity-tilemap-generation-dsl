@@ -40,7 +40,7 @@ namespace Assets.Scripts.AST
             for(int i = 1; i < context.TEXT().Length; i++) {
                 args.Add(context.TEXT()[i].GetText());
             }
-            if(context.FUNCTION_PARAM_END() == null) {
+            if(args.Count > 0 && context.FUNCTION_PARAM_END() == null) {
                 throw new Exception("Missing ending bracket of argument declaration");
             }
 
