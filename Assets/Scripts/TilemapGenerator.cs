@@ -11,7 +11,7 @@ public class TilemapGenerator : MonoBehaviour
     
     public List<Sprite> Textures;
     
-    public int TextureSize;
+    public int Seed;
 
     [HideInInspector]
     public string DSLInput;

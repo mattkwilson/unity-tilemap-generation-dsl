@@ -26,6 +26,11 @@ public class TilemapGeneratorEditor : Editor
 
         DrawDefaultInspector();
 
+        if(GUILayout.Button("Random Seed")) {
+            int seed = Random.Range(int.MinValue, int.MaxValue);
+            serializedObject.FindProperty("Seed").intValue = seed;
+        }
+
         scrollPosition = EditorGUILayout.BeginScrollView(scrollPosition, GUILayout.Height(500));
         serializedObject.FindProperty("DSLInput").stringValue = EditorGUILayout.TextArea(serializedObject.FindProperty("DSLInput").stringValue, GUILayout.ExpandHeight(true));
 

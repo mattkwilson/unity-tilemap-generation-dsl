@@ -245,13 +245,13 @@ namespace Assets.Scripts.AST
                     }
                 }
                 if (n.GetX() == -1 && n.GetY() == -1) {
-                    n.CalculateNoise(n.GetPosition().x + x.GetValue(), n.GetPosition().y + y.GetValue(), noiseMap as NoiseMap);
+                    n.CalculateNoise(n.GetPosition().x + x.GetValue(), n.GetPosition().y + y.GetValue(), noiseMap as NoiseMap, tilemapGenerator.Seed);
                 } else if (n.GetX() == -1) {
-                    n.CalculateNoise(n.GetPosition().x + x.GetValue(), n.GetPosition().y + n.GetY(), noiseMap as NoiseMap);
+                    n.CalculateNoise(n.GetPosition().x + x.GetValue(), n.GetPosition().y + n.GetY(), noiseMap as NoiseMap, tilemapGenerator.Seed);
                 } else if (n.GetY() == -1) {
-                    n.CalculateNoise(n.GetPosition().x + n.GetX(), n.GetPosition().y + y.GetValue(), noiseMap as NoiseMap);
+                    n.CalculateNoise(n.GetPosition().x + n.GetX(), n.GetPosition().y + y.GetValue(), noiseMap as NoiseMap, tilemapGenerator.Seed);
                 } else {
-                    n.CalculateNoise(n.GetPosition().x + n.GetX(), n.GetPosition().y + n.GetY(), noiseMap as NoiseMap);
+                    n.CalculateNoise(n.GetPosition().x + n.GetX(), n.GetPosition().y + n.GetY(), noiseMap as NoiseMap, tilemapGenerator.Seed);
                 }
             } else {
                 throw new Exception("Invalid NoiseMap reference in Noise variable");

@@ -16,11 +16,11 @@ namespace Assets.Scripts.AST
             _y = y;
             _noiseMapName = noiseMapName;
         }
-        public void CalculateNoise(int x, int y, NoiseMap noiseMap)
+        public void CalculateNoise(int x, int y, NoiseMap noiseMap, int seed)
         {
             float frequency = noiseMap.GetFrequency();
             int scale = noiseMap.GetScale();
-            _noiseValue = Mathf.RoundToInt(Mathf.PerlinNoise(x / frequency, y / frequency) * scale);
+            _noiseValue = Mathf.RoundToInt(Mathf.PerlinNoise((x + seed) / frequency, (y + seed) / frequency) * scale);
         }
 
         public override void Accept(TilemapGenerator tilemapGenerator, ITilemapDSLVisitor v){
