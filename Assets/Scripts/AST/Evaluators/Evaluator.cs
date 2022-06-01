@@ -47,7 +47,7 @@ namespace Assets.Scripts.AST
                 }
             }
 
-            
+            Dictionary<string, Variable> variableCopy = CopyVariables();
 
             Function function = functions[c.GetFunctionName()];
             List<string> args = c.GetArgs();
@@ -64,8 +64,6 @@ namespace Assets.Scripts.AST
                 variables.Add(parameter, argVar);
                 args.RemoveAt(0);
             }
-    
-
             if (c.GetX() == -1 && c.GetY() == -1) {
                 function.Execute(tilemapGenerator, this, c.GetPosition().x + x.GetValue(), c.GetPosition().y + y.GetValue());  
             } else if (c.GetX() == -1) {
@@ -75,6 +73,8 @@ namespace Assets.Scripts.AST
             } else {
                 function.Execute(tilemapGenerator, this, c.GetPosition().x + c.GetX(), c.GetPosition().y + c.GetY());
             }
+
+            RestoreVariables(variableCopy);
         }
 
         public void visit(TilemapGenerator tilemapGenerator, Statement c)
