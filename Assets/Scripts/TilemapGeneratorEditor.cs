@@ -27,7 +27,7 @@ public class TilemapGeneratorEditor : Editor
         DrawDefaultInspector();
 
         if(GUILayout.Button("Random Seed")) {
-            int seed = Random.Range(-9999999, 9999999);
+            int seed = UnityEngine.Random.Range(-9999999, 9999999);
             serializedObject.FindProperty("Seed").intValue = seed;
         }
 
@@ -36,6 +36,8 @@ public class TilemapGeneratorEditor : Editor
 
         EditorGUILayout.EndScrollView();
         if(GUILayout.Button("Generate Tilemap")) {
+            UnityEngine.Random.InitState(tilemapGenerator.Seed);
+
             string input = serializedObject.FindProperty("DSLInput").stringValue;
             TilemapDSLLexer lexer = new TilemapDSLLexer(new CodePointCharStream(input));
             lexer.Reset();
@@ -47,5 +49,6 @@ public class TilemapGeneratorEditor : Editor
         }
         serializedObject.ApplyModifiedProperties();
         tilemapGenerator.UpdateTransparentTextureList();
+        tilemapGenerator.Random = new System.Random(tilemapGenerator.Seed);
     }
 }

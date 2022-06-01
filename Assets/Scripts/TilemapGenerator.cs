@@ -14,12 +14,16 @@ public class TilemapGenerator : MonoBehaviour
     public int Seed;
 
     [HideInInspector]
+    public System.Random Random;
+
+    [HideInInspector]
     public string DSLInput;
 
     // DSL API
     private Tilemap baseTilemap;
     private Tilemap transparentMap;
     private List<Sprite> texturesWithTransparency = new List<Sprite>();
+
 
     public void UpdateTransparentTextureList() {
         foreach(Sprite sprite in Textures) {
