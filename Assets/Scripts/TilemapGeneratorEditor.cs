@@ -27,7 +27,7 @@ public class TilemapGeneratorEditor : Editor
         DrawDefaultInspector();
 
         if(GUILayout.Button("Random Seed")) {
-            int seed = Random.Range(int.MinValue, int.MaxValue);
+            int seed = Random.Range(-9999999, 9999999);
             serializedObject.FindProperty("Seed").intValue = seed;
         }
 

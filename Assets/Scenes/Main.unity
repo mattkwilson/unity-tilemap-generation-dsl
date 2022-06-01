@@ -157,27 +157,28 @@ MonoBehaviour:
   Textures:
   - {fileID: -1070942781, guid: 239ee64c5fede2c40b15a3ea62cf41ae, type: 3}
   - {fileID: 1060004617, guid: 239ee64c5fede2c40b15a3ea62cf41ae, type: 3}
-  - {fileID: 1535905514, guid: 4b7bcd59505fecf4a85e49583de3a465, type: 3}
-  - {fileID: -1023544834, guid: 4b7bcd59505fecf4a85e49583de3a465, type: 3}
-  - {fileID: -1487926888, guid: 4b7bcd59505fecf4a85e49583de3a465, type: 3}
-  - {fileID: 664239215, guid: 4b7bcd59505fecf4a85e49583de3a465, type: 3}
-  - {fileID: 1617997108, guid: 4b7bcd59505fecf4a85e49583de3a465, type: 3}
-  - {fileID: -190791776, guid: 4b7bcd59505fecf4a85e49583de3a465, type: 3}
+  - {fileID: 785703694, guid: 4b7bcd59505fecf4a85e49583de3a465, type: 3}
+  - {fileID: -1626814448, guid: 4b7bcd59505fecf4a85e49583de3a465, type: 3}
+  - {fileID: 295387720, guid: 4b7bcd59505fecf4a85e49583de3a465, type: 3}
+  - {fileID: -1176440899, guid: 4b7bcd59505fecf4a85e49583de3a465, type: 3}
+  - {fileID: 1982762205, guid: 4b7bcd59505fecf4a85e49583de3a465, type: 3}
+  - {fileID: 664750016, guid: 4b7bcd59505fecf4a85e49583de3a465, type: 3}
   - {fileID: 473036698, guid: 239ee64c5fede2c40b15a3ea62cf41ae, type: 3}
   - {fileID: 1565518853, guid: 239ee64c5fede2c40b15a3ea62cf41ae, type: 3}
-  - {fileID: 1158258363, guid: a77ba833122de694d907de79ed67b117, type: 3}
-  - {fileID: -1372084676, guid: a77ba833122de694d907de79ed67b117, type: 3}
-  - {fileID: -1704619499, guid: a77ba833122de694d907de79ed67b117, type: 3}
-  - {fileID: -1772378825, guid: a77ba833122de694d907de79ed67b117, type: 3}
-  - {fileID: 1298956454, guid: a77ba833122de694d907de79ed67b117, type: 3}
-  TextureSize: 16
-  DSLInput: "\rFunction: GenerateOcean (Grass)\n\tLoop x 0 to 100 step 1 \n\tLoop
-    y 0 to 100 step 1\n\tFill x y 1 1 in Shore5\nEndFunction\n\nCanvas 100 100\r\n\nTexture:
-    Grass 0\nTexture: LightGrass 1\nTexture: TexturedGrass1 2\nTexture: TexturedGrass2
-    3\nTexture: TexturedGrass3 4\nTexture: TexturedGrass4 5\nTexture: TexturedGrass5
-    6\nTexture: TexturedGrass6 7\nTexture: Sand1 8\nTexture: Sand2 9\nTexture: Shore1
-    10\nTexture: Shore2 11\nTexture: Shore3 12\nTexture: Shore4 13\nTexture: Shore5
-    14\n\n\nCall GenerateOcean 0 0 (LightGrass)\n\n"
+  - {fileID: -929952482, guid: a77ba833122de694d907de79ed67b117, type: 3}
+  - {fileID: -246433387, guid: a77ba833122de694d907de79ed67b117, type: 3}
+  - {fileID: 1431609626, guid: a77ba833122de694d907de79ed67b117, type: 3}
+  - {fileID: 2094690060, guid: a77ba833122de694d907de79ed67b117, type: 3}
+  - {fileID: -1439391321, guid: a77ba833122de694d907de79ed67b117, type: 3}
+  Seed: -9058953
+  DSLInput: "\rFunction: GenerateOcean \n\tLoop x 0 to 100 step 1 \n\t\tLoop y 0
+    to 100 step 1\n\t\t\tNoise: n x y from Map1\n\t\t\tIf n > 10\n\t\t\t\tFill x
+    y 1 1 in Grass\n\t\t\tEndIf\n\t\tEndLoop\n\tEndLoop\nEndFunction\n\nCanvas 100
+    100\r\n\nTexture: Grass 0\nTexture: LightGrass 1\nTexture: TexturedGrass1 2\nTexture:
+    TexturedGrass2 3\nTexture: TexturedGrass3 4\nTexture: TexturedGrass4 5\nTexture:
+    TexturedGrass5 6\nTexture: TexturedGrass6 7\nTexture: Sand1 8\nTexture: Sand2
+    9\nTexture: Shore1 10\nTexture: Shore2 11\nTexture: Shore3 12\nTexture: Shore4
+    13\nTexture: Shore5 14\n\nNoiseMap: Map1 10 20\n\nCall GenerateOcean 0 0 \n\n"
 --- !u!4 &141094708
 Transform:
   m_ObjectHideFlags: 0

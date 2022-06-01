@@ -19,7 +19,7 @@ public class TilemapGenerator : MonoBehaviour
     // DSL API
     private Tilemap baseTilemap;
     private Tilemap transparentMap;
-    private List<Sprite> texturesWithTransparency;
+    private List<Sprite> texturesWithTransparency = new List<Sprite>();
 
     public void UpdateTransparentTextureList() {
         foreach(Sprite sprite in Textures) {
