@@ -13,7 +13,7 @@ namespace Assets.Scripts.AST
         {
             int x;
             int y;
-            string functionName = context.TEXT().GetText();
+            string functionName = context.TEXT()[0].GetText();
             switch (context.VAR().Length)
             {
                 case 2:
@@ -36,7 +36,11 @@ namespace Assets.Scripts.AST
                 default:
                     throw new Exception("Unexpected error parsing Call");
             }
-            return new Call(functionName, x, y);
+            List<string> args = new List<string>();
+            for(int i = 1; i < context.TEXT().Length; i++) {
+                args.Add(context.TEXT()[i].GetText());
+            }
+            return new Call(functionName, x, y, args);
         }
 
         public override ASTBase VisitCanvas([NotNull] TilemapDSLParser.CanvasContext context)
@@ -100,12 +104,16 @@ namespace Assets.Scripts.AST
 
         public override ASTBase VisitFunction([NotNull] TilemapDSLParser.FunctionContext context)
         {
-            string name = context.TEXT().GetText();
+            string name = context.TEXT()[0].GetText();
             List<Statement> statements = new List<Statement>(); 
             foreach (TilemapDSLParser.StatementContext statement in context.statement()) {
                 statements.Add(VisitStatement(statement) as Statement);         
-            }            
-            return new Function(name, statements);
+            }  
+            List<string> parameters = new List<string>();
+            for(int i = 1; i < context.TEXT().Length; i++) {
+                parameters.Add(context.TEXT()[i].GetText());
+            }          
+            return new Function(name, statements, parameters);
         }
 
         public override ASTBase VisitIf([NotNull] TilemapDSLParser.IfContext context)

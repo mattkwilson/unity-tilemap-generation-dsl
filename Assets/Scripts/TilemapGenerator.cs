@@ -24,7 +24,7 @@ public class TilemapGenerator : MonoBehaviour
     }
 
     public void Fill(int x, int y, int width, int height, Color32 color32) {
-        Debug.Log("Filling: " + x + " " + y + " " + width + " " + height + " " + color32.ToString());
+        // Debug.Log("Filling: " + x + " " + y + " " + width + " " + height + " " + color32.ToString());
         Tile tile = ScriptableObject.CreateInstance("Tile") as Tile;
         tile.sprite = BaseTileSprite;
         tile.color = color32;
@@ -36,7 +36,7 @@ public class TilemapGenerator : MonoBehaviour
     }
 
     public void Fill(int x, int y, int width, int height, Assets.Scripts.AST.Texture texture) {
-        Debug.Log("Filling: " + x + " " + y + " " + width + " " + height + " with texture");
+        // Debug.Log("Filling: " + x + " " + y + " " + width + " " + height + " with texture");
         Tile tile = ScriptableObject.CreateInstance("Tile") as Tile;
         tile.sprite = Textures[texture.GetIndex()];
         for(int i = x; i < x + width; i++){

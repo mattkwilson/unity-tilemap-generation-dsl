@@ -47,6 +47,22 @@ namespace Assets.Scripts.AST
             }
 
             Function function = functions[c.GetFunctionName()];
+            List<string> args = c.GetArgs();
+            List<string> parameters = function.GetParameters();
+            foreach(string parameter in parameters) {
+                if(args.Count == 0) {
+                    throw new Exception("Call to function missing arguments");
+                }
+                string currArg = args[0];
+                Variable argVar;
+                if(!variables.TryGetValue(currArg, out argVar)) {
+                    throw new Exception("Argument does not reference valid variable");
+                }
+                variables.Add(parameter, argVar);
+                args.RemoveAt(0);
+            }
+    
+
             if (c.GetX() == -1 && c.GetY() == -1) {
                 function.Execute(tilemapGenerator, this, c.GetPosition().x + x.GetValue(), c.GetPosition().y + y.GetValue());  
             } else if (c.GetX() == -1) {

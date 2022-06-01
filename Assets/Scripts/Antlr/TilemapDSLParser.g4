@@ -1,7 +1,7 @@
 parser grammar TilemapDSLParser;
 options { tokenVocab=TilemapDSLLexer; }
 
-program : canvas (statement | function)*;
+program : function* canvas statement*;
 statement : (loop|if|fill|call|variable);
 variable : (color|noiseMap|noise|texture);
 // 'Canvas' width height
@@ -22,9 +22,9 @@ noise : NOISE_START TEXT (INTEGER|VAR) (INTEGER|VAR) NOISE_FROM TEXT;
 // 'Function:' Name
 //      statement
 // 'EndFunction'
-function : FUNCTION_START TEXT statement* FUNCTION_END;
+function : FUNCTION_START TEXT (FUNCTION_PARAM_START TEXT (FUNCTION_PARAM_SEP TEXT)* FUNCTION_PARAM_END)? statement* FUNCTION_END;
 // 'Call' FunctionName X Y
-call : CALL TEXT (INTEGER|VAR) (INTEGER|VAR);
+call : CALL TEXT (INTEGER|VAR) (INTEGER|VAR) (FUNCTION_PARAM_START TEXT (FUNCTION_PARAM_SEP TEXT)* FUNCTION_PARAM_END)?;
 // 'If' (Number Condition Number)
 // 'EndIf'
 if : IF_START TEXT CONDITION INTEGER statement* IF_END;
