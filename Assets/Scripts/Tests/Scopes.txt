@@ -1,0 +1,13 @@
+Canvas 100 100
+Texture: sand 1
+
+Loop x 0 to 10 step 1
+Loop y 0 to 10 step 1
+	Texture: grass 0
+	Fill x y 2 2 in sand
+	Fill x y 1 1 in grass
+EndLoop
+EndLoop
+
+Fill 0 0 2 2 in sand
+Fill 0 0 1 1 in grass
