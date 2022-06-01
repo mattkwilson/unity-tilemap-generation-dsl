@@ -9,7 +9,7 @@ canvas : CANVAS_START INTEGER INTEGER;
 // 'Loop' (x 0 to 100 step 1)
 // 'EndLoop'
 loop : LOOP_START VAR INTEGER LOOP_DEF_TO INTEGER LOOP_DEF_STEP INTEGER statement* LOOP_END;
-// 'Fill:' X Y width height 'in' color
+// 'Fill' X Y width height 'in' color
 fill : FILL_START (INTEGER|VAR) (INTEGER|VAR) INTEGER INTEGER FILL_IN TEXT;
 // 'Color:' Name R G B
 color : COLOR_START TEXT INTEGER INTEGER INTEGER;

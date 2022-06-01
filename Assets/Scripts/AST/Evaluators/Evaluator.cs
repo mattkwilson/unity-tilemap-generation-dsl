@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using UnityEngine;
 
 namespace Assets.Scripts.AST
@@ -88,12 +89,18 @@ namespace Assets.Scripts.AST
 
         public void visit(TilemapGenerator tilemapGenerator, Color c)
         {
-            variables.Add(c.GetName(), c);
+            if (!variables.TryAdd(c.GetName(), c))
+            {
+                variables[c.GetName()] = c;
+            }
         }
 
         public void visit(TilemapGenerator tilemapGenerator, Texture t)
         {
-            variables.Add(t.GetName(), t);
+            if (!variables.TryAdd(t.GetName(), t))
+            {
+                variables[t.GetName()] = t;
+            }
         }
 
         public void visit(TilemapGenerator tilemapGenerator, Fill f)
@@ -144,7 +151,23 @@ namespace Assets.Scripts.AST
                     }
                 }
             } else {
-                throw new Exception("Variable referenced within Fill does not exist");
+                throw new Exception("Variable " + f.GetTexture() + " referenced within Fill does not exist");
+            }
+        }
+
+        private Dictionary<string, Variable> CopyVariables()
+        {
+            return new Dictionary<string, Variable>(variables);
+        }
+
+        private void RestoreVariables(Dictionary<string, Variable> toRestore)
+        {
+            foreach (string variablesKey in new List<string>(variables.Keys))
+            {
+                if (!toRestore.ContainsKey(variablesKey))
+                {
+                    variables.Remove(variablesKey);
+                }
             }
         }
 
@@ -169,6 +192,8 @@ namespace Assets.Scripts.AST
                     throw new Exception("Can not have more than 2 nested loops");
                 }
             }
+
+            Dictionary<string, Variable> variablesCopy = CopyVariables();
             for (int i = loop.GetFrom(); i <= loop.GetTo(); i += loop.GetStep())
             {
                 loopVar.SetValue(i);
@@ -177,10 +202,12 @@ namespace Assets.Scripts.AST
                     statement.Accept(tilemapGenerator, this);
                 }
             }
+            RestoreVariables(variablesCopy);
         }
 
         public void visit(TilemapGenerator tilemapGenerator, If i)
         {
+            Dictionary<string, Variable> variablesCopy = CopyVariables();
             if (variables[i.GetNoiseVariable()] is not Noise noise)
             {
                 throw new Exception("If variable should be of Noise type");
@@ -193,6 +220,7 @@ namespace Assets.Scripts.AST
                     statement.Accept(tilemapGenerator, this);
                 }
             }
+            RestoreVariables(variablesCopy);
         }
 
         public void visit(TilemapGenerator tilemapGenerator, Noise n)
