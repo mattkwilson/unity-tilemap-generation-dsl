@@ -56,6 +56,9 @@ namespace Assets.Scripts.AST
                 if(args.Count == 0) {
                     throw new Exception("Call to function missing arguments");
                 }
+                if(variables.ContainsKey(parameter)) {
+                    throw new Exception("Parameter name already exists within scope");
+                }
                 string currArg = args[0];
                 Variable argVar;
                 if(!variables.TryGetValue(currArg, out argVar)) {
