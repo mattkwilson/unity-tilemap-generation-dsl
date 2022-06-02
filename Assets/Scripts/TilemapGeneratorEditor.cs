@@ -24,7 +24,12 @@ public class TilemapGeneratorEditor : Editor
     {
         serializedObject.Update();
 
-         DrawDefaultInspector();
+        DrawDefaultInspector();
+
+        if(GUILayout.Button("Random Seed")) {
+            int seed = Random.Range(-9999999, 9999999);
+            serializedObject.FindProperty("Seed").intValue = seed;
+        }
 
         scrollPosition = EditorGUILayout.BeginScrollView(scrollPosition, GUILayout.Height(500));
         serializedObject.FindProperty("DSLInput").stringValue = EditorGUILayout.TextArea(serializedObject.FindProperty("DSLInput").stringValue, GUILayout.ExpandHeight(true));
@@ -41,5 +46,6 @@ public class TilemapGeneratorEditor : Editor
             program.Accept(tilemapGenerator, new Evaluator());
         }
         serializedObject.ApplyModifiedProperties();
+        tilemapGenerator.UpdateTransparentTextureList();
     }
 }

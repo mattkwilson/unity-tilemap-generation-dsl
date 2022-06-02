@@ -40,6 +40,10 @@ namespace Assets.Scripts.AST
             for(int i = 1; i < context.TEXT().Length; i++) {
                 args.Add(context.TEXT()[i].GetText());
             }
+            if(args.Count > 0 && context.FUNCTION_PARAM_END() == null) {
+                throw new Exception("Missing ending bracket of argument declaration");
+            }
+
             return new Call(functionName, x, y, args);
         }
 
@@ -110,9 +114,18 @@ namespace Assets.Scripts.AST
                 statements.Add(VisitStatement(statement) as Statement);         
             }  
             List<string> parameters = new List<string>();
-            for(int i = 1; i < context.TEXT().Length; i++) {
-                parameters.Add(context.TEXT()[i].GetText());
-            }          
+            if(context.FUNCTION_PARAM_START() != null) {
+                for(int i = 1; i < context.TEXT().Length; i++) {
+                    parameters.Add(context.TEXT()[i].GetText());
+                }   
+                if(context.FUNCTION_PARAM_END() == null) {
+                    throw new Exception("Missing end of parameter declaration");
+                }
+            }
+                   
+            if(context.FUNCTION_END() == null) {
+                throw new Exception("Missing end of function");
+            }
             return new Function(name, statements, parameters);
         }
 
@@ -242,5 +255,35 @@ namespace Assets.Scripts.AST
             throw new Exception("Unexpected error parsing variable");
         }
 
+        public override ASTBase Visit(IParseTree tree)
+        {
+            return base.Visit(tree);
+        }
+
+        public override ASTBase VisitChildren(IRuleNode node)
+        {
+            return base.VisitChildren(node);
+        }
+
+        public override ASTBase VisitTerminal(ITerminalNode node)
+        {
+            return base.VisitTerminal(node);
+        }
+
+        public override ASTBase VisitErrorNode(IErrorNode node)
+        {
+            Debug.Log("Error Node");
+            return base.VisitErrorNode(node);
+        }
+
+        protected override ASTBase AggregateResult(ASTBase aggregate, ASTBase nextResult)
+        {
+            return base.AggregateResult(aggregate, nextResult);
+        }
+
+        protected override bool ShouldVisitNextChild(IRuleNode node, ASTBase currentResult)
+        {
+            return base.ShouldVisitNextChild(node, currentResult);
+        }
     }
 }

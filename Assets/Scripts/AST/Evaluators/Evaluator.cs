@@ -47,12 +47,17 @@ namespace Assets.Scripts.AST
                 }
             }
 
+            Dictionary<string, Variable> variableCopy = CopyVariables();
+
             Function function = functions[c.GetFunctionName()];
             List<string> args = c.GetArgs();
             List<string> parameters = function.GetParameters();
             foreach(string parameter in parameters) {
                 if(args.Count == 0) {
                     throw new Exception("Call to function missing arguments");
+                }
+                if(variables.ContainsKey(parameter)) {
+                    throw new Exception("Parameter name already exists within scope");
                 }
                 string currArg = args[0];
                 Variable argVar;
@@ -62,8 +67,6 @@ namespace Assets.Scripts.AST
                 variables.Add(parameter, argVar);
                 args.RemoveAt(0);
             }
-    
-
             if (c.GetX() == -1 && c.GetY() == -1) {
                 function.Execute(tilemapGenerator, this, c.GetPosition().x + x.GetValue(), c.GetPosition().y + y.GetValue());  
             } else if (c.GetX() == -1) {
@@ -73,6 +76,8 @@ namespace Assets.Scripts.AST
             } else {
                 function.Execute(tilemapGenerator, this, c.GetPosition().x + c.GetX(), c.GetPosition().y + c.GetY());
             }
+
+            RestoreVariables(variableCopy);
         }
 
         public void visit(TilemapGenerator tilemapGenerator, Statement c)
@@ -240,13 +245,13 @@ namespace Assets.Scripts.AST
                     }
                 }
                 if (n.GetX() == -1 && n.GetY() == -1) {
-                    n.CalculateNoise(n.GetPosition().x + x.GetValue(), n.GetPosition().y + y.GetValue(), noiseMap as NoiseMap);
+                    n.CalculateNoise(n.GetPosition().x + x.GetValue(), n.GetPosition().y + y.GetValue(), noiseMap as NoiseMap, tilemapGenerator.Seed);
                 } else if (n.GetX() == -1) {
-                    n.CalculateNoise(n.GetPosition().x + x.GetValue(), n.GetPosition().y + n.GetY(), noiseMap as NoiseMap);
+                    n.CalculateNoise(n.GetPosition().x + x.GetValue(), n.GetPosition().y + n.GetY(), noiseMap as NoiseMap, tilemapGenerator.Seed);
                 } else if (n.GetY() == -1) {
-                    n.CalculateNoise(n.GetPosition().x + n.GetX(), n.GetPosition().y + y.GetValue(), noiseMap as NoiseMap);
+                    n.CalculateNoise(n.GetPosition().x + n.GetX(), n.GetPosition().y + y.GetValue(), noiseMap as NoiseMap, tilemapGenerator.Seed);
                 } else {
-                    n.CalculateNoise(n.GetPosition().x + n.GetX(), n.GetPosition().y + n.GetY(), noiseMap as NoiseMap);
+                    n.CalculateNoise(n.GetPosition().x + n.GetX(), n.GetPosition().y + n.GetY(), noiseMap as NoiseMap, tilemapGenerator.Seed);
                 }
             } else {
                 throw new Exception("Invalid NoiseMap reference in Noise variable");
