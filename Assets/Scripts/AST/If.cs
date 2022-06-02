@@ -5,15 +5,15 @@ namespace Assets.Scripts.AST
 {
     public class If : Statement
     {
-        private readonly string _noiseVariable;
-        private int _noiseValue;
+        private readonly string argumentVariable;
+        private int argumentValue;
         private readonly string _condition;
         private readonly int _number;
         private readonly List<Statement> _statements;
 
-        public If(string noise, string condition, int number, List<Statement> statements)
+        public If(string arg, string condition, int number, List<Statement> statements)
         {
-            _noiseVariable = noise;
+            argumentVariable = arg;
             _condition = condition;
             _number = number;
             _statements = statements;
@@ -23,9 +23,9 @@ namespace Assets.Scripts.AST
             }
         }
 
-        public void SetNoiseValue(int value)
+        public void SetArgValue(int value)
         {
-            _noiseValue = value;
+            argumentValue = value;
         }
 
         public bool EvaluateCondition()
@@ -33,25 +33,25 @@ namespace Assets.Scripts.AST
             switch (_condition)
             {
                 case ">":
-                    return _noiseValue > _number;
+                    return argumentValue > _number;
                 case ">=":
-                    return _noiseValue >= _number;
+                    return argumentValue >= _number;
                 case "<":
-                    return _noiseValue < _number;
+                    return argumentValue < _number;
                 case "<=":
-                    return _noiseValue <= _number;
+                    return argumentValue <= _number;
                 case "==":
-                    return _noiseValue == _number;
+                    return argumentValue == _number;
                 case "!=":
-                    return _noiseValue != _number;
+                    return argumentValue != _number;
                 default:
                     throw new Exception("Unexpected comparator in If");
             }
         }
 
-        public string GetNoiseVariable()
+        public string GetArgument()
         {
-            return _noiseVariable;
+            return argumentVariable;
         }
 
         public List<Statement> GetStatements()

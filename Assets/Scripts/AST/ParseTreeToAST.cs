@@ -131,14 +131,14 @@ namespace Assets.Scripts.AST
 
         public override ASTBase VisitIf([NotNull] TilemapDSLParser.IfContext context)
         {
-            string noise = context.TEXT().GetText();
+            string arg = context.TEXT().GetText();
             string condition = context.CONDITION().GetText();
             int number = Int32.Parse(context.INTEGER().GetText());
             List<Statement> statements = new List<Statement>();
             foreach (TilemapDSLParser.StatementContext statement in context.statement()) {
                 statements.Add(VisitStatement(statement) as Statement);         
             }
-            return new If(noise, condition, number, statements);
+            return new If(arg, condition, number, statements);
         }
 
         public override ASTBase VisitLoop([NotNull] TilemapDSLParser.LoopContext context)
@@ -252,38 +252,20 @@ namespace Assets.Scripts.AST
                 return VisitTexture(context.texture());
             }
 
+            if (context.random() != null)
+            {
+                return VisitRandom(context.random());
+            }
+
             throw new Exception("Unexpected error parsing variable");
         }
 
-        public override ASTBase Visit(IParseTree tree)
+        public override ASTBase VisitRandom([NotNull] TilemapDSLParser.RandomContext context)
         {
-            return base.Visit(tree);
-        }
-
-        public override ASTBase VisitChildren(IRuleNode node)
-        {
-            return base.VisitChildren(node);
-        }
-
-        public override ASTBase VisitTerminal(ITerminalNode node)
-        {
-            return base.VisitTerminal(node);
-        }
-
-        public override ASTBase VisitErrorNode(IErrorNode node)
-        {
-            Debug.Log("Error Node");
-            return base.VisitErrorNode(node);
-        }
-
-        protected override ASTBase AggregateResult(ASTBase aggregate, ASTBase nextResult)
-        {
-            return base.AggregateResult(aggregate, nextResult);
-        }
-
-        protected override bool ShouldVisitNextChild(IRuleNode node, ASTBase currentResult)
-        {
-            return base.ShouldVisitNextChild(node, currentResult);
+            string name = context.TEXT().GetText();
+            int min = Int32.Parse(context.INTEGER()[0].GetText());
+            int max = Int32.Parse(context.INTEGER()[1].GetText());
+            return new Random(name, min, max);
         }
     }
 }

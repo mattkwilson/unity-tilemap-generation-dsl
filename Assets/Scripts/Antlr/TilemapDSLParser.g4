@@ -3,7 +3,7 @@ options { tokenVocab=TilemapDSLLexer; }
 
 program : function* canvas statement*;
 statement : (loop|if|fill|call|variable);
-variable : (color|noiseMap|noise|texture);
+variable : (color|noiseMap|noise|texture|random);
 // 'Canvas' width height
 canvas : CANVAS_START INTEGER INTEGER;
 // 'Loop' (x 0 to 100 step 1)
@@ -19,6 +19,8 @@ texture : TEXTURE_START TEXT INTEGER;
 noiseMap : NOISEMAP_START TEXT INTEGER INTEGER;
 // 'Noise:' Name x y 'from' noiseMapName
 noise : NOISE_START TEXT (INTEGER|VAR) (INTEGER|VAR) NOISE_FROM TEXT;
+// 'Random:' Name 'between' 0 'and' 5
+random : RANDOM_START TEXT RANDOM_BETWEEN INTEGER RANDOM_AND INTEGER;
 // 'Function:' Name
 //      statement
 // 'EndFunction'

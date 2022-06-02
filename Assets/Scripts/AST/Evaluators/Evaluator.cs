@@ -211,11 +211,17 @@ namespace Assets.Scripts.AST
         public void visit(TilemapGenerator tilemapGenerator, If i)
         {
             Dictionary<string, Variable> variablesCopy = CopyVariables();
-            if (variables[i.GetNoiseVariable()] is not Noise noise)
+            Variable arg = variables[i.GetArgument()];
+            if (arg is not Noise && arg is not Random)
             {
-                throw new Exception("If variable should be of Noise type");
+                throw new Exception("If variable should be of Noise or Random type");
             }
-            i.SetNoiseValue(noise.GetNoise());
+            if(arg is Noise) {
+                i.SetArgValue((arg as Noise).GetNoise());
+            } else {
+                i.SetArgValue((arg as Random).GetValue(tilemapGenerator.Random));
+            }
+            
             if (i.EvaluateCondition())
             {
                 foreach (Statement statement in i.GetStatements())
@@ -265,7 +271,18 @@ namespace Assets.Scripts.AST
 
         public void visit(TilemapGenerator tilemapGenerator, NoiseMap n)
         {
-            variables.Add(n.GetName(), n);
+            if (!variables.TryAdd(n.GetName(), n))
+            {
+                variables[n.GetName()] = n;
+            }
+        }
+
+        public void visit(TilemapGenerator tilemapGenerator, Random r)
+        {
+            if (!variables.TryAdd(r.GetName(), r))
+            {
+                variables[r.GetName()] = r;
+            }
         }
 
         private LoopVariable findMatchingLoopVar(Statement statement, IteratorType iteratorType) {

@@ -17,6 +17,9 @@ FILL_IN: 'in' WS* -> mode(TEXT_MODE);
 NOISEMAP_START: 'NoiseMap:' WS* -> mode(TEXT_MODE);
 NOISE_START: 'Noise:' WS* -> mode(TEXT_MODE);
 NOISE_FROM: 'from' WS* -> mode(TEXT_MODE);
+RANDOM_START: 'Random:' WS* -> mode(TEXT_MODE);
+RANDOM_BETWEEN: 'between';
+RANDOM_AND: 'and';
 
 FUNCTION_START: 'Function:' WS* -> mode(TEXT_MODE);
 FUNCTION_END: 'EndFunction';
