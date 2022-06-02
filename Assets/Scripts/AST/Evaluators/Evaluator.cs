@@ -50,7 +50,7 @@ namespace Assets.Scripts.AST
             Dictionary<string, Variable> variableCopy = CopyVariables();
 
             Function function = functions[c.GetFunctionName()];
-            List<string> args = c.GetArgs();
+            List<string> args = new List<string>(c.GetArgs());
             List<string> parameters = function.GetParameters();
             foreach(string parameter in parameters) {
                 if(args.Count == 0) {
