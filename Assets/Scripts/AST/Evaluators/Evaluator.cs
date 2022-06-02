@@ -219,7 +219,7 @@ namespace Assets.Scripts.AST
             if(arg is Noise) {
                 i.SetArgValue((arg as Noise).GetNoise());
             } else {
-                i.SetArgValue((arg as Random).GetValue(tilemapGenerator.Random));
+                i.SetArgValue((arg as Random).GetValue());
             }
             
             if (i.EvaluateCondition())
@@ -283,6 +283,7 @@ namespace Assets.Scripts.AST
             {
                 variables[r.GetName()] = r;
             }
+            r.GenerateRandom(tilemapGenerator.Random);
         }
 
         private LoopVariable findMatchingLoopVar(Statement statement, IteratorType iteratorType) {
