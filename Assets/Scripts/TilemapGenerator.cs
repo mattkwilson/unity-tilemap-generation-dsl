@@ -19,7 +19,7 @@ public class TilemapGenerator : MonoBehaviour
     [HideInInspector]
     public string DSLInput;
 
-    // DSL API
+    private int canvasWidth, canvasHeight;
     private Tilemap baseTilemap;
     private Tilemap transparentMap;
     private List<Sprite> texturesWithTransparency = new List<Sprite>();
@@ -39,7 +39,9 @@ public class TilemapGenerator : MonoBehaviour
         }
     }
 
-    public void Canvas(int width, int height) {
+    public void Canvas(int canvasWidth, int canvasHeight) {
+        this.canvasWidth = canvasWidth;
+        this.canvasHeight = canvasHeight;
         GameObject tilemapGameObject = Instantiate(TilemapPrefab);
         Tilemap[] tilemaps = tilemapGameObject.GetComponentsInChildren<Tilemap>();
         baseTilemap = tilemaps[0].gameObject.name == "BaseTilemap" ? tilemaps[0] : tilemaps[1];
@@ -53,7 +55,11 @@ public class TilemapGenerator : MonoBehaviour
         tile.color = color32;
         for(int i = x; i < x + width; i++){
             for(int j = y; j < y + height; j++){
-                baseTilemap.SetTile(new Vector3Int(i,j,0), tile);
+                if(i >= 0 && i < canvasWidth && j >= 0 && j < canvasHeight) {
+                    baseTilemap.SetTile(new Vector3Int(i,j,0), tile);
+                } else {
+                    Debug.LogWarning("Tried to fill tile out of bounds of the canvas");
+                }
             }
         }
     }
@@ -70,7 +76,12 @@ public class TilemapGenerator : MonoBehaviour
 
         for(int i = x; i < x + width; i++){
             for(int j = y; j < y + height; j++){
-                tilemap.SetTile(new Vector3Int(i,j,0), tile);
+                if(i >= 0 && i < canvasWidth && j >= 0 && j < canvasHeight) {
+                    tilemap.SetTile(new Vector3Int(i,j,0), tile);
+                } else {
+                    Debug.LogWarning("Tried to fill tile out of bounds of the canvas");
+                }
+                
             }
         }
     }
