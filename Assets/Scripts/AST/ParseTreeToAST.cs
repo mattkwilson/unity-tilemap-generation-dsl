@@ -131,6 +131,10 @@ namespace Assets.Scripts.AST
 
         public override ASTBase VisitIf([NotNull] TilemapDSLParser.IfContext context)
         {
+            if (context.IF_END() == null)
+            {
+                throw new Exception("Missing EndIf");
+            }
             string arg = context.TEXT().GetText();
             string condition = context.CONDITION().GetText();
             int number = Int32.Parse(context.INTEGER().GetText());
@@ -143,6 +147,10 @@ namespace Assets.Scripts.AST
 
         public override ASTBase VisitLoop([NotNull] TilemapDSLParser.LoopContext context)
         {
+            if (context.LOOP_END() == null)
+            {
+                throw new Exception("Missing EndLoop");
+            }
             IteratorType iterator = (context.VAR().GetText() == "x")? IteratorType.X : IteratorType.Y;
             int from = Int32.Parse(context.INTEGER()[0].GetText());
             int to   = Int32.Parse(context.INTEGER()[1].GetText());
