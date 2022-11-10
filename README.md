@@ -1,10 +1,22 @@
 # CPSC 410 - Project 1
+
+Award Winning: Class favourite DSL project of UBC CPSC 410 Summer T1 22
+
 Procedural Terrain Generation DSL in Unity
+
+https://user-images.githubusercontent.com/11277442/201193772-8b39e092-1a9b-4dfb-8bdd-7509367f7b0f.mp4
 
 ## Antlr
 Generate C# source files for grammar file using: `antlr4 -Dlanguage=CSharp -visitor TilemapDSLLexer.g4 TilemapDSLParser.g4 -o ./gen`
 
 It will generate source files for both the lexer and parser in the Assets/Antlr/gen folder.
+
+## Contributors
+ - [Tarek Al-Ayoubi](https://github.com/tarek20501)
+ - [Jeffrey Guo](https://github.com/jeffxguo)
+ - [Edvin Keskin](https://github.com/edvinkeskin)
+ - [Mert Kipcak](https://github.com/mertkipcak)
+ - [Matt Wilson](https://github.com/mattwilson720)
 
 # Milestone 1
 
