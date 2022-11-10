@@ -10,6 +10,12 @@
 /[Ll]ogs/
 /[Uu]ser[Ss]ettings/
 
+# Remove third-party assets
+Assets/Third-Party/
+Assets/Third-Party.meta
+Assets/Plugins/
+Assets/Plugins.meta
+
 # MemoryCaptures can get excessive in size.
 # They also could contain extremely sensitive data
 /[Mm]emoryCaptures/
